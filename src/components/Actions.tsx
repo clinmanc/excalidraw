@@ -20,7 +20,7 @@ import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { hasStrokeColor } from "../scene/comparisons";
 
-import { Row, Col } from "antd";
+import { Row, Col, Divider } from "antd";
 
 export const SelectedShapeActions = ({
   appState,
@@ -70,6 +70,8 @@ export const SelectedShapeActions = ({
       {showChangeBackgroundIcons && renderAction("changeBackgroundColor")}
       {showFillIcons && renderAction("changeFillStyle")}
 
+      <Divider type="vertical" />
+
       {(hasStrokeWidth(elementType) ||
         targetElements.some((element) => hasStrokeWidth(element.type))) &&
         renderAction("changeStrokeWidth")}
@@ -88,7 +90,11 @@ export const SelectedShapeActions = ({
 
       {(canChangeSharpness(elementType) ||
         targetElements.some((element) => canChangeSharpness(element.type))) && (
-        <>{renderAction("changeSharpness")}</>
+        <>
+          {renderAction("changeSharpness")}
+
+          <Divider type="vertical" />
+        </>
       )}
 
       {(hasText(elementType) ||
@@ -99,6 +105,8 @@ export const SelectedShapeActions = ({
           {renderAction("changeFontFamily")}
 
           {renderAction("changeTextAlign")}
+
+          <Divider type="vertical" />
         </>
       )}
 
@@ -109,11 +117,15 @@ export const SelectedShapeActions = ({
 
       {renderAction("changeOpacity")}
 
+      <Divider type="vertical" />
+
       <>
         {renderAction("sendToBack")}
         {renderAction("sendBackward")}
         {renderAction("bringToFront")}
         {renderAction("bringForward")}
+
+        <Divider type="vertical" />
       </>
 
       {targetElements.length > 1 && (
@@ -173,7 +185,7 @@ export const ShapesSwitcher = ({
   setAppState: React.Component<any, AppState>["setState"];
   onImageAction: (data: { pointerType: PointerType | null }) => void;
 }) => (
-  <Row gutter={16} style={{ width: "100px" }}>
+  <Row gutter={[16, 16]}>
     {SHAPES.map(({ value, icon, key }, index) => {
       const label = t(`toolBar.${value}`);
       const letter = key && (typeof key === "string" ? key : key[0]);
@@ -182,6 +194,10 @@ export const ShapesSwitcher = ({
         : `${index + 1}`;
       return (
         <Col className="gutter-row" span={12} key={value}>
+          {/*<Button*/}
+          {/*  type={elementType === value ? "primary" : "text"}*/}
+          {/*  icon={<div className="ToolIcon__icon">{icon}</div>}*/}
+          {/*></Button>*/}
           <ToolButton
             className="Shape"
             type="radio"

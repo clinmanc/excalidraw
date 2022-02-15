@@ -11,7 +11,7 @@ import { getSelectedElements, isSomeElementSelected } from "../scene";
 import { exportToCanvas } from "../scene/export";
 import { AppState, BinaryFiles } from "../types";
 import { Dialog } from "./Dialog";
-import { clipboard, exportImage } from "./icons";
+import { clipboard } from "./icons";
 import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import "./ExportDialog.scss";
@@ -19,6 +19,8 @@ import OpenColor from "open-color";
 import { CheckboxItem } from "./CheckboxItem";
 import { DEFAULT_EXPORT_PADDING } from "../constants";
 import { nativeFileSystemSupported } from "../data/filesystem";
+
+import { FileImageOutlined } from "@ant-design/icons";
 
 const supportsContextFilters =
   "filter" in document.createElement("canvas").getContext("2d")!;
@@ -247,7 +249,7 @@ export const ImageExportDialog = ({
           setModalIsShown(true);
         }}
         data-testid="image-export-button"
-        icon={exportImage}
+        icon={<FileImageOutlined />}
         type="button"
         aria-label={t("buttons.exportImage")}
         showAriaLabel={useIsMobile()}

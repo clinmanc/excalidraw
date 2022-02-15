@@ -2,7 +2,6 @@ import { CODES, KEYS } from "../keys";
 import { t } from "../i18n";
 import { arrayToMap, getShortcutKey } from "../utils";
 import { register } from "./register";
-import { UngroupIcon, GroupIcon } from "../components/icons";
 import { newElementWith } from "../element/mutateElement";
 import { getSelectedElements, isSomeElementSelected } from "../scene";
 import {
@@ -20,6 +19,8 @@ import { ToolButton } from "../components/ToolButton";
 import { ExcalidrawElement, ExcalidrawTextElement } from "../element/types";
 import { AppState } from "../types";
 import { isBoundToContainer } from "../element/typeChecks";
+
+import { GroupOutlined, UngroupOutlined } from "@ant-design/icons";
 
 const allElementsInSameGroup = (elements: readonly ExcalidrawElement[]) => {
   if (elements.length >= 2) {
@@ -136,7 +137,7 @@ export const actionGroup = register({
     <ToolButton
       hidden={!enableActionGroup(elements, appState)}
       type="button"
-      icon={<GroupIcon theme={appState.theme} />}
+      icon={<GroupOutlined />}
       onClick={() => updateData(null)}
       title={`${t("labels.group")} — ${getShortcutKey("CtrlOrCmd+G")}`}
       aria-label={t("labels.group")}
@@ -196,7 +197,7 @@ export const actionUngroup = register({
     <ToolButton
       type="button"
       hidden={getSelectedGroupIds(appState).length === 0}
-      icon={<UngroupIcon theme={appState.theme} />}
+      icon={<UngroupOutlined />}
       onClick={() => updateData(null)}
       title={`${t("labels.ungroup")} — ${getShortcutKey("CtrlOrCmd+Shift+G")}`}
       aria-label={t("labels.ungroup")}

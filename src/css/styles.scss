@@ -2,6 +2,19 @@
 @import "./theme";
 @import "~antd/dist/antd.css";
 
+.menu_top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+}
+
+.menu_left {
+  position: absolute;
+  left: 0;
+  top: 36px;
+}
+
 :root {
   --zIndex-canvas: 1;
   --zIndex-wysiwyg: 2;

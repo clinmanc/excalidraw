@@ -74,7 +74,7 @@ import { hasStrokeColor } from "../scene/comparisons";
 import { arrayToMap } from "../utils";
 import { register } from "./register";
 import { Tooltip } from "../components/Tooltip";
-import { Popover } from "antd";
+import { Popover, Slider } from "antd";
 
 const FONT_SIZE_RELATIVE_INCREASE_STEP = 0.1;
 
@@ -482,37 +482,50 @@ export const actionChangeOpacity = register({
     <Tooltip label={t("labels.opacity")}>
       <Popover
         content={
-          <label className="control-label">
-            <input
-              type="range"
-              min="0"
-              max="100"
-              step="10"
-              onChange={(event) => updateData(+event.target.value)}
-              onWheel={(event) => {
-                event.stopPropagation();
-                const target = event.target as HTMLInputElement;
-                const STEP = 10;
-                const MAX = 100;
-                const MIN = 0;
-                const value = +target.value;
-
-                if (event.deltaY < 0 && value < MAX) {
-                  updateData(value + STEP);
-                } else if (event.deltaY > 0 && value > MIN) {
-                  updateData(value - STEP);
-                }
-              }}
-              value={
-                getFormValue(
-                  elements,
-                  appState,
-                  (element) => element.opacity,
-                  appState.currentItemOpacity,
-                ) ?? undefined
-              }
-            />
-          </label>
+          <Slider
+            step={10}
+            tipFormatter={(value) => `${value}%`}
+            value={
+              getFormValue(
+                elements,
+                appState,
+                (element) => element.opacity,
+                appState.currentItemOpacity,
+              ) ?? undefined
+            }
+            onChange={(value) => updateData(+value)}
+          />
+          // <label className="control-label">
+          //   <input
+          //     type="range"
+          //     min="0"
+          //     max="100"
+          //     step="10"
+          //     onChange={(event) => updateData(+event.target.value)}
+          //     onWheel={(event) => {
+          //       event.stopPropagation();
+          //       const target = event.target as HTMLInputElement;
+          //       const STEP = 10;
+          //       const MAX = 100;
+          //       const MIN = 0;
+          //       const value = +target.value;
+          //
+          //       if (event.deltaY < 0 && value < MAX) {
+          //         updateData(value + STEP);
+          //       } else if (event.deltaY > 0 && value > MIN) {
+          //         updateData(value - STEP);
+          //       }
+          //     }}
+          //     value={
+          //       getFormValue(
+          //         elements,
+          //         appState,
+          //         (element) => element.opacity,
+          //         appState.currentItemOpacity,
+          //       ) ?? undefined
+          //     }
+          //   />
+          // </label>
         }
         title={t("labels.opacity")}
         trigger="click"

@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { useExcalidrawContainer } from "./App";
 import { AbortError } from "../errors";
-import Spinner from "./Spinner";
 import { PointerType } from "../element/types";
+import { Button } from "antd";
 
 export type ToolButtonSize = "small" | "medium";
 
@@ -95,51 +95,65 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
     props.type === "icon" ||
     props.type === "submit"
   ) {
-    const type = (props.type === "icon" ? "button" : props.type) as
-      | "button"
-      | "submit";
+    // const type = (props.type === "icon" ? "button" : props.type) as
+    //   | "button"
+    //   | "submit";
     return (
-      <button
-        className={clsx(
-          "ToolIcon_type_button",
-          sizeCn,
-          props.className,
-          props.visible && !props.hidden
-            ? "ToolIcon_type_button--show"
-            : "ToolIcon_type_button--hide",
-          {
-            ToolIcon: !props.hidden,
-            "ToolIcon--selected": props.selected,
-            "ToolIcon--plain": props.type === "icon",
-          },
-        )}
+      <Button
+        icon={props.icon}
+        type="text"
         data-testid={props["data-testid"]}
-        hidden={props.hidden}
+        aria-label={props.label}
+        // showAriaLabel={useIsMobile()}
         title={props.title}
-        aria-label={props["aria-label"]}
-        type={type}
-        onClick={onClick}
         ref={innerRef}
         disabled={isLoading || props.isLoading}
+        onClick={onClick}
       >
-        {(props.icon || props.label) && (
-          <div className="ToolIcon__icon" aria-hidden="true">
-            {props.icon || props.label}
-            {props.keyBindingLabel && (
-              <span className="ToolIcon__keybinding">
-                {props.keyBindingLabel}
-              </span>
-            )}
-            {props.isLoading && <Spinner />}
-          </div>
-        )}
-        {props.showAriaLabel && (
-          <div className="ToolIcon__label">
-            {props["aria-label"]} {isLoading && <Spinner />}
-          </div>
-        )}
         {props.children}
-      </button>
+      </Button>
+
+      // <button
+      //   className={clsx(
+      //     "ToolIcon_type_button",
+      //     sizeCn,
+      //     props.className,
+      //     props.visible && !props.hidden
+      //       ? "ToolIcon_type_button--show"
+      //       : "ToolIcon_type_button--hide",
+      //     {
+      //       ToolIcon: !props.hidden,
+      //       "ToolIcon--selected": props.selected,
+      //       "ToolIcon--plain": props.type === "icon",
+      //     },
+      //   )}
+      //   data-testid={props["data-testid"]}
+      //   hidden={props.hidden}
+      //   title={props.title}
+      //   aria-label={props["aria-label"]}
+      //   type={type}
+      //   onClick={onClick}
+      //   ref={innerRef}
+      //   disabled={isLoading || props.isLoading}
+      // >
+      //   {(props.icon || props.label) && (
+      //     <div className="ToolIcon__icon" aria-hidden="true">
+      //       {props.icon || props.label}
+      //       {props.keyBindingLabel && (
+      //         <span className="ToolIcon__keybinding">
+      //           {props.keyBindingLabel}
+      //         </span>
+      //       )}
+      //       {props.isLoading && <Spinner />}
+      //     </div>
+      //   )}
+      //   {props.showAriaLabel && (
+      //     <div className="ToolIcon__label">
+      //       {props["aria-label"]} {isLoading && <Spinner />}
+      //     </div>
+      //   )}
+      //   {props.children}
+      // </button>
     );
   }
 

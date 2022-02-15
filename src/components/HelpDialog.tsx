@@ -1,9 +1,10 @@
 import React from "react";
 import { t } from "../i18n";
 import { isDarwin, isWindows } from "../keys";
-import { Dialog } from "./Dialog";
 import { getShortcutKey } from "../utils";
 import "./HelpDialog.scss";
+
+import { Modal } from "antd";
 
 // const Header = () => (
 //   <div className="HelpDialog--header">
@@ -130,11 +131,21 @@ export const HelpDialog = ({ onClose }: { onClose?: () => void }) => {
 
   return (
     <>
-      <Dialog
-        onCloseRequest={handleClose}
-        title={t("helpDialog.title")}
+      <Modal
         className={"HelpDialog"}
+        title={t("helpDialog.title")}
+        visible={true}
+        width={1000}
+        cancelButtonProps={{ style: { display: "none" } }}
+        onCancel={handleClose}
+        onOk={handleClose}
+        okText={t("buttons.close")}
       >
+        {/*<Dialog*/}
+        {/*  onCloseRequest={handleClose}*/}
+        {/*  title={t("helpDialog.title")}*/}
+        {/*  className={"HelpDialog"}*/}
+        {/*>*/}
         <Section title={t("helpDialog.shortcuts")}>
           <Columns>
             <Column>
@@ -409,7 +420,7 @@ export const HelpDialog = ({ onClose }: { onClose?: () => void }) => {
             </Column>
           </Columns>
         </Section>
-      </Dialog>
+      </Modal>
     </>
   );
 };

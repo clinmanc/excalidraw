@@ -18,6 +18,7 @@ const ClearCanvas = ({ onConfirm }: { onConfirm: () => void }) => {
     <>
       <Button
         icon={<DeleteOutlined />}
+        type="text"
         aria-label={t("buttons.clearReset")}
         // showAriaLabel={useIsMobile()}
         title={t("buttons.clearReset")}

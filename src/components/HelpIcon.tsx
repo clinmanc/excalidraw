@@ -1,4 +1,5 @@
-import { questionCircle } from "../components/icons";
+import { Button } from "antd";
+import { QuestionOutlined } from "@ant-design/icons";
 
 type HelpIconProps = {
   title?: string;
@@ -8,13 +9,20 @@ type HelpIconProps = {
 };
 
 export const HelpIcon = (props: HelpIconProps) => (
-  <button
-    className="help-icon"
-    onClick={props.onClick}
-    type="button"
+  <Button
+    icon={<QuestionOutlined />}
+    type="text"
     title={`${props.title} — ?`}
     aria-label={props.title}
-  >
-    {questionCircle}
-  </button>
+    onClick={props.onClick}
+  />
+  // <button
+  //   className="help-icon"
+  //   onClick={props.onClick}
+  //   type="button"
+  //   title={`${props.title} — ?`}
+  //   aria-label={props.title}
+  // >
+  //   {questionCircle}
+  // </button>
 );

@@ -15,6 +15,7 @@ import {
   SendToBackIcon,
   BringForwardIcon,
 } from "../components/icons";
+import { Button } from "antd";
 
 export const actionSendBackward = register({
   name: "sendBackward",
@@ -32,14 +33,21 @@ export const actionSendBackward = register({
     !event.shiftKey &&
     event.code === CODES.BRACKET_LEFT,
   PanelComponent: ({ updateData, appState }) => (
-    <button
-      type="button"
+    <Button
+      icon={<SendBackwardIcon theme={appState.theme} />}
+      type="text"
       className="zIndexButton"
-      onClick={() => updateData(null)}
       title={`${t("labels.sendBackward")} — ${getShortcutKey("CtrlOrCmd+[")}`}
-    >
-      <SendBackwardIcon theme={appState.theme} />
-    </button>
+      onClick={() => updateData(null)}
+    />
+    // <button
+    //   type="button"
+    //   className="zIndexButton"
+    //   onClick={() => updateData(null)}
+    //   title={`${t("labels.sendBackward")} — ${getShortcutKey("CtrlOrCmd+[")}`}
+    // >
+    //   <SendBackwardIcon theme={appState.theme} />
+    // </button>
   ),
 });
 
@@ -59,14 +67,21 @@ export const actionBringForward = register({
     !event.shiftKey &&
     event.code === CODES.BRACKET_RIGHT,
   PanelComponent: ({ updateData, appState }) => (
-    <button
-      type="button"
+    <Button
+      icon={<BringForwardIcon theme={appState.theme} />}
+      type="text"
       className="zIndexButton"
-      onClick={() => updateData(null)}
       title={`${t("labels.bringForward")} — ${getShortcutKey("CtrlOrCmd+]")}`}
-    >
-      <BringForwardIcon theme={appState.theme} />
-    </button>
+      onClick={() => updateData(null)}
+    />
+    // <button
+    //   type="button"
+    //   className="zIndexButton"
+    //   onClick={() => updateData(null)}
+    //   title={`${t("labels.bringForward")} — ${getShortcutKey("CtrlOrCmd+]")}`}
+    // >
+    //   <BringForwardIcon theme={appState.theme} />
+    // </button>
   ),
 });
 
@@ -89,18 +104,29 @@ export const actionSendToBack = register({
         event.shiftKey &&
         event.code === CODES.BRACKET_LEFT,
   PanelComponent: ({ updateData, appState }) => (
-    <button
-      type="button"
+    <Button
+      icon={<SendToBackIcon theme={appState.theme} />}
+      type="text"
       className="zIndexButton"
-      onClick={() => updateData(null)}
       title={`${t("labels.sendToBack")} — ${
         isDarwin
           ? getShortcutKey("CtrlOrCmd+Alt+[")
           : getShortcutKey("CtrlOrCmd+Shift+[")
       }`}
-    >
-      <SendToBackIcon theme={appState.theme} />
-    </button>
+      onClick={() => updateData(null)}
+    />
+    // <button
+    //   type="button"
+    //   className="zIndexButton"
+    //   onClick={() => updateData(null)}
+    //   title={`${t("labels.sendToBack")} — ${
+    //     isDarwin
+    //       ? getShortcutKey("CtrlOrCmd+Alt+[")
+    //       : getShortcutKey("CtrlOrCmd+Shift+[")
+    //   }`}
+    // >
+    //   <SendToBackIcon theme={appState.theme} />
+    // </button>
   ),
 });
 
@@ -123,17 +149,28 @@ export const actionBringToFront = register({
         event.shiftKey &&
         event.code === CODES.BRACKET_RIGHT,
   PanelComponent: ({ updateData, appState }) => (
-    <button
-      type="button"
+    <Button
+      icon={<BringToFrontIcon theme={appState.theme} />}
+      type="text"
       className="zIndexButton"
-      onClick={(event) => updateData(null)}
       title={`${t("labels.bringToFront")} — ${
         isDarwin
           ? getShortcutKey("CtrlOrCmd+Alt+]")
           : getShortcutKey("CtrlOrCmd+Shift+]")
       }`}
-    >
-      <BringToFrontIcon theme={appState.theme} />
-    </button>
+      onClick={() => updateData(null)}
+    />
+    // <button
+    //   type="button"
+    //   className="zIndexButton"
+    //   onClick={(event) => updateData(null)}
+    //   title={`${t("labels.bringToFront")} — ${
+    //     isDarwin
+    //       ? getShortcutKey("CtrlOrCmd+Alt+]")
+    //       : getShortcutKey("CtrlOrCmd+Shift+]")
+    //   }`}
+    // >
+    //   <BringToFrontIcon theme={appState.theme} />
+    // </button>
   ),
 });

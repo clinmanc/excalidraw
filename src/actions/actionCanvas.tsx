@@ -1,5 +1,4 @@
 import { ColorPicker } from "../components/ColorPicker";
-import { zoomIn, zoomOut } from "../components/icons";
 import { ToolButton } from "../components/ToolButton";
 import { DarkModeToggle } from "../components/DarkModeToggle";
 import { THEME, ZOOM_STEP } from "../constants";
@@ -17,6 +16,8 @@ import { Tooltip } from "../components/Tooltip";
 import { newElementWith } from "../element/mutateElement";
 import { getDefaultAppState } from "../appState";
 import ClearCanvas from "../components/ClearCanvas";
+
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 
 export const actionChangeViewBackgroundColor = register({
   name: "changeViewBackgroundColor",
@@ -96,7 +97,7 @@ export const actionZoomIn = register({
   PanelComponent: ({ updateData }) => (
     <ToolButton
       type="button"
-      icon={zoomIn}
+      icon={<PlusOutlined />}
       title={`${t("buttons.zoomIn")} — ${getShortcutKey("CtrlOrCmd++")}`}
       aria-label={t("buttons.zoomIn")}
       onClick={() => {
@@ -131,7 +132,7 @@ export const actionZoomOut = register({
   PanelComponent: ({ updateData }) => (
     <ToolButton
       type="button"
-      icon={zoomOut}
+      icon={<MinusOutlined />}
       title={`${t("buttons.zoomOut")} — ${getShortcutKey("CtrlOrCmd+-")}`}
       aria-label={t("buttons.zoomOut")}
       onClick={() => {

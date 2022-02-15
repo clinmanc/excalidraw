@@ -5,13 +5,15 @@ import { t } from "../i18n";
 import { useIsMobile } from "./App";
 import { AppState, ExportOpts, BinaryFiles } from "../types";
 import { Dialog } from "./Dialog";
-import { exportFile, exportToFileIcon, link } from "./icons";
+import { exportToFileIcon, link } from "./icons";
 import { ToolButton } from "./ToolButton";
 import { actionSaveFileToDisk } from "../actions/actionExport";
 import { Card } from "./Card";
 
 import "./ExportDialog.scss";
 import { nativeFileSystemSupported } from "../data/filesystem";
+
+import { FileOutlined } from "@ant-design/icons";
 
 export type ExportCB = (
   elements: readonly NonDeletedExcalidrawElement[],
@@ -111,7 +113,7 @@ export const JSONExportDialog = ({
           setModalIsShown(true);
         }}
         data-testid="json-export-button"
-        icon={exportFile}
+        icon={<FileOutlined />}
         type="button"
         aria-label={t("buttons.export")}
         showAriaLabel={useIsMobile()}

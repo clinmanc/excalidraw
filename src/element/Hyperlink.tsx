@@ -10,7 +10,7 @@ import { NonDeletedExcalidrawElement } from "./types";
 
 import { register } from "../actions/register";
 import { ToolButton } from "../components/ToolButton";
-import { editIcon, link, trash } from "../components/icons";
+import { editIcon, trash } from "../components/icons";
 import { t } from "../i18n";
 import {
   useCallback,
@@ -31,6 +31,8 @@ import { isPointHittingElementBoundingBox } from "./collision";
 import { getElementAbsoluteCoords } from "./";
 
 import "./Hyperlink.scss";
+
+import { LinkOutlined } from "@ant-design/icons";
 
 const CONTAINER_WIDTH = 320;
 const SPACE_BOTTOM = 85;
@@ -265,7 +267,7 @@ export const actionLink = register({
     return (
       <ToolButton
         type="button"
-        icon={link}
+        icon={<LinkOutlined />}
         aria-label={t(getContextMenuLabel(elements, appState))}
         title={`${t("labels.link.label")} - ${getShortcutKey("CtrlOrCmd+K")}`}
         onClick={() => updateData(null)}

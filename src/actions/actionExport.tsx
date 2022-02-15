@@ -1,5 +1,5 @@
 import { trackEvent } from "../analytics";
-import { load, questionCircle, saveAs } from "../components/icons";
+import { questionCircle, saveAs } from "../components/icons";
 import { ProjectName } from "../components/ProjectName";
 import { ToolButton } from "../components/ToolButton";
 import "../components/ToolIcon.scss";
@@ -20,6 +20,8 @@ import { ActiveFile } from "../components/ActiveFile";
 import { isImageFileHandle } from "../data/blob";
 import { nativeFileSystemSupported } from "../data/filesystem";
 import { Theme } from "../element/types";
+
+import { FolderOpenOutlined } from "@ant-design/icons";
 
 export const actionChangeProjectName = register({
   name: "changeProjectName",
@@ -240,7 +242,7 @@ export const actionLoadScene = register({
   PanelComponent: ({ updateData, appState }) => (
     <ToolButton
       type="button"
-      icon={load}
+      icon={<FolderOpenOutlined />}
       title={t("buttons.load")}
       aria-label={t("buttons.load")}
       showAriaLabel={useIsMobile()}

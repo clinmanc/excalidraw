@@ -73,7 +73,9 @@ export const createUndoAction: ActionCreator = (history) => ({
     !event.shiftKey,
   PanelComponent: ({ updateData, data }) => (
     <Button
-      icon={<RedoOutlined />}
+      icon={<UndoOutlined />}
+      type="text"
+      title={t("buttons.undo")}
       aria-label={t("buttons.undo")}
       onClick={updateData}
     />
@@ -99,7 +101,9 @@ export const createRedoAction: ActionCreator = (history) => ({
     (isWindows && event.ctrlKey && !event.shiftKey && event.key === KEYS.Y),
   PanelComponent: ({ updateData, data }) => (
     <Button
-      icon={<UndoOutlined />}
+      icon={<RedoOutlined />}
+      type="text"
+      title={t("buttons.redo")}
       aria-label={t("buttons.redo")}
       onClick={updateData}
     />

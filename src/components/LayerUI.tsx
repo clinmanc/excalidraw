@@ -11,11 +11,11 @@ import { ExportType } from "../scene/types";
 import { AppProps, AppState, ExcalidrawProps, BinaryFiles } from "../types";
 import { muteFSAbortError } from "../utils";
 import { SelectedShapeActions, ShapesSwitcher, ZoomActions } from "./Actions";
-import { BackgroundPickerAndDarkModeToggle } from "./BackgroundPickerAndDarkModeToggle";
-import CollabButton from "./CollabButton";
+// import { BackgroundPickerAndDarkModeToggle } from "./BackgroundPickerAndDarkModeToggle";
+// import CollabButton from "./CollabButton";
 import { ErrorDialog } from "./ErrorDialog";
 import { ExportCB, ImageExportDialog } from "./ImageExportDialog";
-import { FixedSideContainer } from "./FixedSideContainer";
+// import { FixedSideContainer } from "./FixedSideContainer";
 import { HintViewer } from "./HintViewer";
 import { Island } from "./Island";
 import { LoadingMessage } from "./LoadingMessage";
@@ -25,8 +25,8 @@ import { PasteChartDialog } from "./PasteChartDialog";
 import { Section } from "./Section";
 import { HelpDialog } from "./HelpDialog";
 import Stack from "./Stack";
-import { Tooltip } from "./Tooltip";
-import { UserList } from "./UserList";
+// import { Tooltip } from "./Tooltip";
+// import { UserList } from "./UserList";
 import Library from "../data/library";
 import { JSONExportDialog } from "./JSONExportDialog";
 import { isImageFileHandle } from "../data/blob";
@@ -35,6 +35,8 @@ import { LibraryMenu } from "./LibraryMenu";
 import "./LayerUI.scss";
 import "./Toolbar.scss";
 import { PenModeButton } from "./PenModeButton";
+
+import { Card } from "antd";
 
 interface LayerUIProps {
   actionManager: ActionManager;
@@ -186,28 +188,26 @@ const LayerUI = ({
   };
 
   const renderCanvasActions = () => (
-    <Stack.Row gap={4}>
-      <Stack.Row gap={1} justifyContent="space-between">
-        {actionManager.renderAction("clearCanvas")}
-        <Separator />
-        {actionManager.renderAction("loadScene")}
-        {renderJSONExportDialog()}
-        {renderImageExportDialog()}
-        <Separator />
-        {onCollabButtonClick && (
-          <CollabButton
-            isCollaborating={isCollaborating}
-            collaboratorCount={appState.collaborators.size}
-            onClick={onCollabButtonClick}
-          />
-        )}
-      </Stack.Row>
-      <BackgroundPickerAndDarkModeToggle
-        actionManager={actionManager}
-        appState={appState}
-        setAppState={setAppState}
-        showThemeBtn={showThemeBtn}
-      />
+    <Stack.Row gap={1} justifyContent="space-between">
+      {actionManager.renderAction("clearCanvas")}
+      <Separator />
+      {actionManager.renderAction("loadScene")}
+      {renderJSONExportDialog()}
+      {renderImageExportDialog()}
+      {/*<Separator />*/}
+      {/*{onCollabButtonClick && (*/}
+      {/*  <CollabButton*/}
+      {/*    isCollaborating={isCollaborating}*/}
+      {/*    collaboratorCount={appState.collaborators.size}*/}
+      {/*    onClick={onCollabButtonClick}*/}
+      {/*  />*/}
+      {/*)}*/}
+      {/*<BackgroundPickerAndDarkModeToggle*/}
+      {/*  actionManager={actionManager}*/}
+      {/*  appState={appState}*/}
+      {/*  setAppState={setAppState}*/}
+      {/*  showThemeBtn={showThemeBtn}*/}
+      {/*/>*/}
       {appState.fileHandle && (
         <>{actionManager.renderAction("saveToActiveFile")}</>
       )}
@@ -265,8 +265,9 @@ const LayerUI = ({
 
     return (
       <>
-        <FixedSideContainer side="top">
-          <div className="App-menu App-menu_top">
+        {/*<FixedSideContainer side="top">*/}
+        <div className="menu_top">
+          <Card size="small" style={{ width: "100vw" }}>
             <Stack.Row
               gap={4}
               className={clsx({ "disable-pointerEvents": zenModeEnabled })}
@@ -292,42 +293,44 @@ const LayerUI = ({
                 renderAction={actionManager.renderAction}
                 zoom={appState.zoom}
               />
-              {renderBottomAppMenu()}
+              {renderRightAppMenu()}
+              {/*<div*/}
+              {/*  className={clsx(*/}
+              {/*    "layer-ui__wrapper__top-right zen-mode-transition",*/}
+              {/*    {*/}
+              {/*      "transition-right": zenModeEnabled,*/}
+              {/*    },*/}
+              {/*  )}*/}
+              {/*>*/}
+              {/*  <UserList>*/}
+              {/*    {appState.collaborators.size > 0 &&*/}
+              {/*      Array.from(appState.collaborators)*/}
+              {/*        // Collaborator is either not initialized or is actually the current user.*/}
+              {/*        .filter(([_, client]) => Object.keys(client).length !== 0)*/}
+              {/*        .map(([clientId, client]) => (*/}
+              {/*          <Tooltip*/}
+              {/*            label={client.username || "Unknown user"}*/}
+              {/*            key={clientId}*/}
+              {/*          >*/}
+              {/*            {actionManager.renderAction("goToCollaborator", {*/}
+              {/*              id: clientId,*/}
+              {/*            })}*/}
+              {/*          </Tooltip>*/}
+              {/*        ))}*/}
+              {/*  </UserList>*/}
+              {/*  {renderTopRightUI?.(isMobile, appState)}*/}
+              {/*</div>*/}
             </Stack.Row>
-            <div
-              className={clsx(
-                "layer-ui__wrapper__top-right zen-mode-transition",
-                {
-                  "transition-right": zenModeEnabled,
-                },
-              )}
-            >
-              <HintViewer
-                appState={appState}
-                elements={elements}
-                isMobile={isMobile}
-              />
-              <UserList>
-                {appState.collaborators.size > 0 &&
-                  Array.from(appState.collaborators)
-                    // Collaborator is either not initialized or is actually the current user.
-                    .filter(([_, client]) => Object.keys(client).length !== 0)
-                    .map(([clientId, client]) => (
-                      <Tooltip
-                        label={client.username || "Unknown user"}
-                        key={clientId}
-                      >
-                        {actionManager.renderAction("goToCollaborator", {
-                          id: clientId,
-                        })}
-                      </Tooltip>
-                    ))}
-              </UserList>
-              {renderTopRightUI?.(isMobile, appState)}
-            </div>
-          </div>
-        </FixedSideContainer>
-        <FixedSideContainer side="left">
+            <HintViewer
+              appState={appState}
+              elements={elements}
+              isMobile={isMobile}
+            />
+          </Card>
+        </div>
+        {/*</FixedSideContainer>*/}
+        {/*<FixedSideContainer side="left">*/}
+        <div className="menu_left">
           {!viewModeEnabled && (
             <Section heading="shapes">
               {(heading) => (
@@ -352,14 +355,8 @@ const LayerUI = ({
                     {/*  onChange={onLockToggle}*/}
                     {/*  title={t("toolBar.lock")}*/}
                     {/*/>*/}
-                    <Island
-                      padding={1}
-                      className={clsx("App-toolbar", {
-                        "zen-mode": zenModeEnabled,
-                      })}
-                    >
+                    <Card title="基础图形" style={{ width: 120 }} size="small">
                       {heading}
-                      基础图形
                       <ShapesSwitcher
                         canvas={canvas}
                         elementType={appState.elementType}
@@ -370,18 +367,19 @@ const LayerUI = ({
                           });
                         }}
                       />
-                    </Island>
+                    </Card>
                   </Stack.Col>
                 </Stack.Col>
               )}
             </Section>
           )}
-        </FixedSideContainer>
+        </div>
+        {/*</FixedSideContainer>*/}
       </>
     );
   };
 
-  const renderBottomAppMenu = () => {
+  const renderRightAppMenu = () => {
     return (
       <Stack.Row>
         <div
@@ -481,7 +479,6 @@ const LayerUI = ({
       })}
     >
       {dialogs}
-      {renderFixedSideContainer()}
       {renderFixedSideContainer()}
       {appState.scrolledOutside && (
         <button
