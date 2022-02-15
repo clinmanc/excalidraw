@@ -34,15 +34,15 @@
   }
 
   .ToolIcon__icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 28px;
+    height: 28px;
     color: var(--icon-fill-color);
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--border-radius-sm);
 
     & + .ToolIcon__label {
       margin-inline-start: 0;
@@ -81,6 +81,8 @@
     padding: 0;
     border: none;
     margin: 0;
+    width: 28px;
+    height: 28px;
     font-size: inherit;
 
     &:focus-visible {
@@ -201,10 +203,6 @@
 
       &:active {
         background-color: var(--button-gray-2);
-      }
-
-      .ToolIcon__icon {
-        border-radius: inherit;
       }
 
       svg {

@@ -60,8 +60,8 @@ import {
 } from "./data/localStorage";
 import CustomStats from "./CustomStats";
 import { restoreAppState, RestoredDataState } from "../data/restore";
-import { Tooltip } from "../components/Tooltip";
-import { shield } from "../components/icons";
+// import { Tooltip } from "../components/Tooltip";
+// import { shield } from "../components/icons";
 
 import "./index.scss";
 import { ExportToExcalidrawPlus } from "./components/ExportToExcalidrawPlus";
@@ -595,7 +595,6 @@ const ExcalidrawWrapper = () => {
         >
           {/* <GitHubCorner theme={appState.theme} dir={document.dir} /> */}
           {/* FIXME remove after 2021-05-20 */}
-          {PlusLinkJSX}
         </div>
       );
     },
@@ -604,19 +603,19 @@ const ExcalidrawWrapper = () => {
 
   const renderFooter = useCallback(
     (isMobile: boolean) => {
-      const renderEncryptedIcon = () => (
-        <a
-          className="encrypted-icon tooltip"
-          href="https://blog.excalidraw.com/end-to-end-encryption/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={t("encrypted.link")}
-        >
-          <Tooltip label={t("encrypted.tooltip")} long={true}>
-            {shield}
-          </Tooltip>
-        </a>
-      );
+      // const renderEncryptedIcon = () => (
+      //   <a
+      //     className="encrypted-icon tooltip"
+      //     href="https://blog.excalidraw.com/end-to-end-encryption/"
+      //     target="_blank"
+      //     rel="noopener noreferrer"
+      //     aria-label={t("encrypted.link")}
+      //   >
+      //     <Tooltip label={t("encrypted.tooltip")} long={true}>
+      //       {shield}
+      //     </Tooltip>
+      //   </a>
+      // );
 
       const renderLanguageList = () => (
         <LanguageList
@@ -659,7 +658,7 @@ const ExcalidrawWrapper = () => {
       }
       return (
         <>
-          {renderEncryptedIcon()}
+          {/*{renderEncryptedIcon()}*/}
           {renderLanguageList()}
         </>
       );

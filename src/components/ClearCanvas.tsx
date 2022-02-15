@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { t } from "../i18n";
-import { useIsMobile } from "./App";
-import { trash } from "./icons";
-import { ToolButton } from "./ToolButton";
+// import { useIsMobile } from "./App";
+// import { trash } from "./icons";
+// import { ToolButton } from "./ToolButton";
 
-import ConfirmDialog from "./ConfirmDialog";
+// import ConfirmDialog from "./ConfirmDialog";
+import { Button, Modal } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const ClearCanvas = ({ onConfirm }: { onConfirm: () => void }) => {
   const [showDialog, setShowDialog] = useState(false);
@@ -14,28 +16,48 @@ const ClearCanvas = ({ onConfirm }: { onConfirm: () => void }) => {
 
   return (
     <>
-      <ToolButton
-        type="button"
-        icon={trash}
-        title={t("buttons.clearReset")}
+      <Button
+        icon={<DeleteOutlined />}
         aria-label={t("buttons.clearReset")}
-        showAriaLabel={useIsMobile()}
+        // showAriaLabel={useIsMobile()}
+        title={t("buttons.clearReset")}
         onClick={toggleDialog}
-        data-testid="clear-canvas-button"
       />
+      {/*<ToolButton*/}
+      {/*  type="button"*/}
+      {/*  icon={trash}*/}
+      {/*  title={t("buttons.clearReset")}*/}
+      {/*  aria-label={t("buttons.clearReset")}*/}
+      {/*  showAriaLabel={useIsMobile()}*/}
+      {/*  onClick={toggleDialog}*/}
+      {/*  data-testid="clear-canvas-button"*/}
+      {/*/>*/}
 
-      {showDialog && (
-        <ConfirmDialog
-          onConfirm={() => {
+      {
+        <Modal
+          visible={showDialog}
+          title={t("clearCanvasDialog.title")}
+          onOk={() => {
             onConfirm();
             toggleDialog();
           }}
           onCancel={toggleDialog}
-          title={t("clearCanvasDialog.title")}
+          okText="确认"
+          cancelText="取消"
         >
           <p className="clear-canvas__content"> {t("alerts.clearReset")}</p>
-        </ConfirmDialog>
-      )}
+        </Modal>
+        // <ConfirmDialog
+        //   onConfirm={() => {
+        //     onConfirm();
+        //     toggleDialog();
+        //   }}
+        //   onCancel={toggleDialog}
+        //   title={t("clearCanvasDialog.title")}
+        // >
+        //   <p className="clear-canvas__content"> {t("alerts.clearReset")}</p>
+        // </ConfirmDialog>
+      }
     </>
   );
 };

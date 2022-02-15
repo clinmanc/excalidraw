@@ -266,13 +266,13 @@ export const ColorPicker = ({
           onClick={() => setActive(!isActive)}
           ref={pickerButton}
         />
-        <ColorInput
-          color={color}
-          label={label}
-          onChange={(color) => {
-            onChange(color);
-          }}
-        />
+        {/*<ColorInput*/}
+        {/*  color={color}*/}
+        {/*  label={label}*/}
+        {/*  onChange={(color) => {*/}
+        {/*    onChange(color);*/}
+        {/*  }}*/}
+        {/*/>*/}
       </div>
       <React.Suspense fallback="">
         {isActive ? (

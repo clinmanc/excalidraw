@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import React, { useCallback } from "react";
 import { ActionManager } from "../actions/manager";
-import { CLASSES } from "../constants";
 import { exportCanvas } from "../data";
 import { isTextElement, showSelectedShapeActions } from "../element";
 import { NonDeletedExcalidrawElement } from "../element/types";
@@ -20,7 +19,7 @@ import { FixedSideContainer } from "./FixedSideContainer";
 import { HintViewer } from "./HintViewer";
 import { Island } from "./Island";
 import { LoadingMessage } from "./LoadingMessage";
-import { LockButton } from "./LockButton";
+// import { LockButton } from "./LockButton";
 import { MobileMenu } from "./MobileMenu";
 import { PasteChartDialog } from "./PasteChartDialog";
 import { Section } from "./Section";
@@ -30,7 +29,6 @@ import { Tooltip } from "./Tooltip";
 import { UserList } from "./UserList";
 import Library from "../data/library";
 import { JSONExportDialog } from "./JSONExportDialog";
-import { LibraryButton } from "./LibraryButton";
 import { isImageFileHandle } from "../data/blob";
 import { LibraryMenu } from "./LibraryMenu";
 
@@ -188,70 +186,41 @@ const LayerUI = ({
   };
 
   const renderCanvasActions = () => (
-    <Section
-      heading="canvasActions"
-      className={clsx("zen-mode-transition", {
-        "transition-left": zenModeEnabled,
-      })}
-    >
-      {/* the zIndex ensures this menu has higher stacking order,
-         see https://github.com/excalidraw/excalidraw/pull/1445 */}
-      <Island padding={2} style={{ zIndex: 1 }}>
-        <Stack.Col gap={4}>
-          <Stack.Row gap={1} justifyContent="space-between">
-            {actionManager.renderAction("clearCanvas")}
-            <Separator />
-            {actionManager.renderAction("loadScene")}
-            {renderJSONExportDialog()}
-            {renderImageExportDialog()}
-            <Separator />
-            {onCollabButtonClick && (
-              <CollabButton
-                isCollaborating={isCollaborating}
-                collaboratorCount={appState.collaborators.size}
-                onClick={onCollabButtonClick}
-              />
-            )}
-          </Stack.Row>
-          <BackgroundPickerAndDarkModeToggle
-            actionManager={actionManager}
-            appState={appState}
-            setAppState={setAppState}
-            showThemeBtn={showThemeBtn}
+    <Stack.Row gap={4}>
+      <Stack.Row gap={1} justifyContent="space-between">
+        {actionManager.renderAction("clearCanvas")}
+        <Separator />
+        {actionManager.renderAction("loadScene")}
+        {renderJSONExportDialog()}
+        {renderImageExportDialog()}
+        <Separator />
+        {onCollabButtonClick && (
+          <CollabButton
+            isCollaborating={isCollaborating}
+            collaboratorCount={appState.collaborators.size}
+            onClick={onCollabButtonClick}
           />
-          {appState.fileHandle && (
-            <>{actionManager.renderAction("saveToActiveFile")}</>
-          )}
-        </Stack.Col>
-      </Island>
-    </Section>
+        )}
+      </Stack.Row>
+      <BackgroundPickerAndDarkModeToggle
+        actionManager={actionManager}
+        appState={appState}
+        setAppState={setAppState}
+        showThemeBtn={showThemeBtn}
+      />
+      {appState.fileHandle && (
+        <>{actionManager.renderAction("saveToActiveFile")}</>
+      )}
+    </Stack.Row>
   );
 
   const renderSelectedShapeActions = () => (
-    <Section
-      heading="selectedShapeActions"
-      className={clsx("zen-mode-transition", {
-        "transition-left": zenModeEnabled,
-      })}
-    >
-      <Island
-        className={CLASSES.SHAPE_ACTIONS_MENU}
-        padding={2}
-        style={{
-          // we want to make sure this doesn't overflow so substracting 200
-          // which is approximately height of zoom footer and top left menu items with some buffer
-          // if active file name is displayed, subtracting 248 to account for its height
-          maxHeight: `${appState.height - (appState.fileHandle ? 248 : 200)}px`,
-        }}
-      >
-        <SelectedShapeActions
-          appState={appState}
-          elements={elements}
-          renderAction={actionManager.renderAction}
-          elementType={appState.elementType}
-        />
-      </Island>
-    </Section>
+    <SelectedShapeActions
+      appState={appState}
+      elements={elements}
+      renderAction={actionManager.renderAction}
+      elementType={appState.elementType}
+    />
   );
 
   const closeLibrary = useCallback(() => {
@@ -295,23 +264,77 @@ const LayerUI = ({
     );
 
     return (
-      <FixedSideContainer side="top">
-        <div className="App-menu App-menu_top">
-          <Stack.Col
-            gap={4}
-            className={clsx({ "disable-pointerEvents": zenModeEnabled })}
-          >
-            {viewModeEnabled
-              ? renderViewModeCanvasActions()
-              : renderCanvasActions()}
-            {shouldRenderSelectedShapeActions && renderSelectedShapeActions()}
-          </Stack.Col>
+      <>
+        <FixedSideContainer side="top">
+          <div className="App-menu App-menu_top">
+            <Stack.Row
+              gap={4}
+              className={clsx({ "disable-pointerEvents": zenModeEnabled })}
+            >
+              <Section heading="canvasActions">
+                {!viewModeEnabled && (
+                  <div
+                    className={clsx("undo-redo-buttons zen-mode-transition", {
+                      "layer-ui__wrapper__footer-left--transition-bottom":
+                        zenModeEnabled,
+                    })}
+                  >
+                    {actionManager.renderAction("undo", { size: "small" })}
+                    {actionManager.renderAction("redo", { size: "small" })}
+                  </div>
+                )}
+              </Section>
+              {viewModeEnabled
+                ? renderViewModeCanvasActions()
+                : renderCanvasActions()}
+              {shouldRenderSelectedShapeActions && renderSelectedShapeActions()}
+              <ZoomActions
+                renderAction={actionManager.renderAction}
+                zoom={appState.zoom}
+              />
+              {renderBottomAppMenu()}
+            </Stack.Row>
+            <div
+              className={clsx(
+                "layer-ui__wrapper__top-right zen-mode-transition",
+                {
+                  "transition-right": zenModeEnabled,
+                },
+              )}
+            >
+              <HintViewer
+                appState={appState}
+                elements={elements}
+                isMobile={isMobile}
+              />
+              <UserList>
+                {appState.collaborators.size > 0 &&
+                  Array.from(appState.collaborators)
+                    // Collaborator is either not initialized or is actually the current user.
+                    .filter(([_, client]) => Object.keys(client).length !== 0)
+                    .map(([clientId, client]) => (
+                      <Tooltip
+                        label={client.username || "Unknown user"}
+                        key={clientId}
+                      >
+                        {actionManager.renderAction("goToCollaborator", {
+                          id: clientId,
+                        })}
+                      </Tooltip>
+                    ))}
+              </UserList>
+              {renderTopRightUI?.(isMobile, appState)}
+            </div>
+          </div>
+        </FixedSideContainer>
+        <FixedSideContainer side="left">
           {!viewModeEnabled && (
             <Section heading="shapes">
               {(heading) => (
                 <Stack.Col gap={4} align="start">
-                  <Stack.Row
+                  <Stack.Col
                     gap={1}
+                    align="center"
                     className={clsx("App-toolbar-container", {
                       "zen-mode": zenModeEnabled,
                     })}
@@ -323,114 +346,44 @@ const LayerUI = ({
                       title={t("toolBar.penMode")}
                       penDetected={appState.penDetected}
                     />
-                    <LockButton
-                      zenModeEnabled={zenModeEnabled}
-                      checked={appState.elementLocked}
-                      onChange={onLockToggle}
-                      title={t("toolBar.lock")}
-                    />
+                    {/*<LockButton*/}
+                    {/*  zenModeEnabled={zenModeEnabled}*/}
+                    {/*  checked={appState.elementLocked}*/}
+                    {/*  onChange={onLockToggle}*/}
+                    {/*  title={t("toolBar.lock")}*/}
+                    {/*/>*/}
                     <Island
                       padding={1}
                       className={clsx("App-toolbar", {
                         "zen-mode": zenModeEnabled,
                       })}
                     >
-                      <HintViewer
-                        appState={appState}
-                        elements={elements}
-                        isMobile={isMobile}
-                      />
                       {heading}
-                      <Stack.Row gap={1}>
-                        <ShapesSwitcher
-                          canvas={canvas}
-                          elementType={appState.elementType}
-                          setAppState={setAppState}
-                          onImageAction={({ pointerType }) => {
-                            onImageAction({
-                              insertOnCanvasDirectly: pointerType !== "mouse",
-                            });
-                          }}
-                        />
-                      </Stack.Row>
+                      基础图形
+                      <ShapesSwitcher
+                        canvas={canvas}
+                        elementType={appState.elementType}
+                        setAppState={setAppState}
+                        onImageAction={({ pointerType }) => {
+                          onImageAction({
+                            insertOnCanvasDirectly: pointerType !== "mouse",
+                          });
+                        }}
+                      />
                     </Island>
-                    <LibraryButton
-                      appState={appState}
-                      setAppState={setAppState}
-                    />
-                  </Stack.Row>
-                  {libraryMenu}
+                  </Stack.Col>
                 </Stack.Col>
               )}
             </Section>
           )}
-          <div
-            className={clsx(
-              "layer-ui__wrapper__top-right zen-mode-transition",
-              {
-                "transition-right": zenModeEnabled,
-              },
-            )}
-          >
-            <UserList>
-              {appState.collaborators.size > 0 &&
-                Array.from(appState.collaborators)
-                  // Collaborator is either not initialized or is actually the current user.
-                  .filter(([_, client]) => Object.keys(client).length !== 0)
-                  .map(([clientId, client]) => (
-                    <Tooltip
-                      label={client.username || "Unknown user"}
-                      key={clientId}
-                    >
-                      {actionManager.renderAction("goToCollaborator", {
-                        id: clientId,
-                      })}
-                    </Tooltip>
-                  ))}
-            </UserList>
-            {renderTopRightUI?.(isMobile, appState)}
-          </div>
-        </div>
-      </FixedSideContainer>
+        </FixedSideContainer>
+      </>
     );
   };
 
   const renderBottomAppMenu = () => {
     return (
-      <footer
-        role="contentinfo"
-        className="layer-ui__wrapper__footer App-menu App-menu_bottom"
-      >
-        <div
-          className={clsx(
-            "layer-ui__wrapper__footer-left zen-mode-transition",
-            {
-              "layer-ui__wrapper__footer-left--transition-left": zenModeEnabled,
-            },
-          )}
-        >
-          <Stack.Col gap={2}>
-            <Section heading="canvasActions">
-              <Island padding={1}>
-                <ZoomActions
-                  renderAction={actionManager.renderAction}
-                  zoom={appState.zoom}
-                />
-              </Island>
-              {!viewModeEnabled && (
-                <div
-                  className={clsx("undo-redo-buttons zen-mode-transition", {
-                    "layer-ui__wrapper__footer-left--transition-bottom":
-                      zenModeEnabled,
-                  })}
-                >
-                  {actionManager.renderAction("undo", { size: "small" })}
-                  {actionManager.renderAction("redo", { size: "small" })}
-                </div>
-              )}
-            </Section>
-          </Stack.Col>
-        </div>
+      <Stack.Row>
         <div
           className={clsx(
             "layer-ui__wrapper__footer-center zen-mode-transition",
@@ -460,7 +413,7 @@ const LayerUI = ({
         >
           {t("buttons.exitZenMode")}
         </button>
-      </footer>
+      </Stack.Row>
     );
   };
 
@@ -529,7 +482,7 @@ const LayerUI = ({
     >
       {dialogs}
       {renderFixedSideContainer()}
-      {renderBottomAppMenu()}
+      {renderFixedSideContainer()}
       {appState.scrolledOutside && (
         <button
           className="scroll-back-to-content"

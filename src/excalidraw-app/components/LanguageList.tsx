@@ -1,5 +1,8 @@
 import React from "react";
 import * as i18n from "../../i18n";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 export const LanguageList = ({
   onChange,
@@ -11,20 +14,31 @@ export const LanguageList = ({
   currentLangCode?: i18n.Language["code"];
 }) => (
   <React.Fragment>
-    <select
-      className="dropdown-select dropdown-select__language"
-      onChange={({ target }) => onChange(target.value)}
+    <Select
       value={currentLangCode}
+      onChange={(value) => onChange(value)}
       aria-label={i18n.t("buttons.selectLanguage")}
     >
-      <option key={i18n.defaultLang.code} value={i18n.defaultLang.code}>
-        {i18n.defaultLang.label}
-      </option>
       {languages.map((lang) => (
-        <option key={lang.code} value={lang.code}>
+        <Option key={lang.code} value={lang.code}>
           {lang.label}
-        </option>
+        </Option>
       ))}
-    </select>
+    </Select>
+    {/*<select*/}
+    {/*  className="dropdown-select dropdown-select__language"*/}
+    {/*  onChange={({ target }) => onChange(target.value)}*/}
+    {/*  value={currentLangCode}*/}
+    {/*  aria-label={i18n.t("buttons.selectLanguage")}*/}
+    {/*>*/}
+    {/*  <option key={i18n.defaultLang.code} value={i18n.defaultLang.code}>*/}
+    {/*    {i18n.defaultLang.label}*/}
+    {/*  </option>*/}
+    {/*  {languages.map((lang) => (*/}
+    {/*    <option key={lang.code} value={lang.code}>*/}
+    {/*      {lang.label}*/}
+    {/*    </option>*/}
+    {/*  ))}*/}
+    {/*</select>*/}
   </React.Fragment>
 );

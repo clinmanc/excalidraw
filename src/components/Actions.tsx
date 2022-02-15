@@ -20,6 +20,8 @@ import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { hasStrokeColor } from "../scene/comparisons";
 
+import { Row, Col } from "antd";
+
 export const SelectedShapeActions = ({
   appState,
   elements,
@@ -59,7 +61,7 @@ export const SelectedShapeActions = ({
   }
 
   return (
-    <div className="panelColumn">
+    <Stack.Row align="center" gap={1}>
       {((hasStrokeColor(elementType) &&
         elementType !== "image" &&
         commonSelectedType !== "image") ||
@@ -107,20 +109,17 @@ export const SelectedShapeActions = ({
 
       {renderAction("changeOpacity")}
 
-      <fieldset>
-        <legend>{t("labels.layers")}</legend>
-        <div className="buttonList">
-          {renderAction("sendToBack")}
-          {renderAction("sendBackward")}
-          {renderAction("bringToFront")}
-          {renderAction("bringForward")}
-        </div>
-      </fieldset>
+      <>
+        {renderAction("sendToBack")}
+        {renderAction("sendBackward")}
+        {renderAction("bringToFront")}
+        {renderAction("bringForward")}
+      </>
 
       {targetElements.length > 1 && (
         <fieldset>
-          <legend>{t("labels.align")}</legend>
-          <div className="buttonList">
+          {/*<legend>{t("labels.align")}</legend>*/}
+          <Stack.Row>
             {
               // swap this order for RTL so the button positions always match their action
               // (i.e. the leftmost button aligns left)
@@ -147,22 +146,19 @@ export const SelectedShapeActions = ({
               {targetElements.length > 2 &&
                 renderAction("distributeVertically")}
             </div>
-          </div>
+          </Stack.Row>
         </fieldset>
       )}
       {!isMobile && !isEditing && targetElements.length > 0 && (
-        <fieldset>
-          <legend>{t("labels.actions")}</legend>
-          <div className="buttonList">
-            {renderAction("duplicateSelection")}
-            {renderAction("deleteSelectedElements")}
-            {renderAction("group")}
-            {renderAction("ungroup")}
-            {targetElements.length === 1 && renderAction("link")}
-          </div>
-        </fieldset>
+        <>
+          {renderAction("duplicateSelection")}
+          {renderAction("deleteSelectedElements")}
+          {renderAction("group")}
+          {renderAction("ungroup")}
+          {targetElements.length === 1 && renderAction("link")}
+        </>
       )}
-    </div>
+    </Stack.Row>
   );
 };
 
@@ -177,7 +173,7 @@ export const ShapesSwitcher = ({
   setAppState: React.Component<any, AppState>["setState"];
   onImageAction: (data: { pointerType: PointerType | null }) => void;
 }) => (
-  <>
+  <Row gutter={16} style={{ width: "100px" }}>
     {SHAPES.map(({ value, icon, key }, index) => {
       const label = t(`toolBar.${value}`);
       const letter = key && (typeof key === "string" ? key : key[0]);
@@ -185,33 +181,34 @@ export const ShapesSwitcher = ({
         ? `${capitalizeString(letter)} ${t("helpDialog.or")} ${index + 1}`
         : `${index + 1}`;
       return (
-        <ToolButton
-          className="Shape"
-          key={value}
-          type="radio"
-          icon={icon}
-          checked={elementType === value}
-          name="editor-current-shape"
-          title={`${capitalizeString(label)} — ${shortcut}`}
-          keyBindingLabel={`${index + 1}`}
-          aria-label={capitalizeString(label)}
-          aria-keyshortcuts={shortcut}
-          data-testid={value}
-          onChange={({ pointerType }) => {
-            setAppState({
-              elementType: value,
-              multiElement: null,
-              selectedElementIds: {},
-            });
-            setCursorForShape(canvas, value);
-            if (value === "image") {
-              onImageAction({ pointerType });
-            }
-          }}
-        />
+        <Col className="gutter-row" span={12} key={value}>
+          <ToolButton
+            className="Shape"
+            type="radio"
+            icon={icon}
+            checked={elementType === value}
+            name="editor-current-shape"
+            title={`${capitalizeString(label)} — ${shortcut}`}
+            keyBindingLabel={`${index + 1}`}
+            aria-label={capitalizeString(label)}
+            aria-keyshortcuts={shortcut}
+            data-testid={value}
+            onChange={({ pointerType }) => {
+              setAppState({
+                elementType: value,
+                multiElement: null,
+                selectedElementIds: {},
+              });
+              setCursorForShape(canvas, value);
+              if (value === "image") {
+                onImageAction({ pointerType });
+              }
+            }}
+          />
+        </Col>
       );
     })}
-  </>
+  </Row>
 );
 
 export const ZoomActions = ({
@@ -221,11 +218,9 @@ export const ZoomActions = ({
   renderAction: ActionManager["renderAction"];
   zoom: Zoom;
 }) => (
-  <Stack.Col gap={1}>
-    <Stack.Row gap={1} align="center">
-      {renderAction("zoomOut")}
-      {renderAction("zoomIn")}
-      {renderAction("resetZoom")}
-    </Stack.Row>
-  </Stack.Col>
+  <Stack.Row gap={1} align="center">
+    {renderAction("zoomOut")}
+    {renderAction("zoomIn")}
+    {renderAction("resetZoom")}
+  </Stack.Row>
 );

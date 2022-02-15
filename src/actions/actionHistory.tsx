@@ -1,6 +1,6 @@
 import { Action, ActionResult } from "./types";
-import { undo, redo } from "../components/icons";
-import { ToolButton } from "../components/ToolButton";
+// import { undo, redo } from "../components/icons";
+// import { ToolButton } from "../components/ToolButton";
 import { t } from "../i18n";
 import History, { HistoryEntry } from "../history";
 import { ExcalidrawElement } from "../element/types";
@@ -9,6 +9,9 @@ import { isWindows, KEYS } from "../keys";
 import { newElementWith } from "../element/mutateElement";
 import { fixBindingsAfterDeletion } from "../element/binding";
 import { arrayToMap } from "../utils";
+
+import { Button } from "antd";
+import { UndoOutlined, RedoOutlined } from "@ant-design/icons";
 
 const writeData = (
   prevElements: readonly ExcalidrawElement[],
@@ -69,13 +72,18 @@ export const createUndoAction: ActionCreator = (history) => ({
     event.key.toLowerCase() === KEYS.Z &&
     !event.shiftKey,
   PanelComponent: ({ updateData, data }) => (
-    <ToolButton
-      type="button"
-      icon={undo}
+    <Button
+      icon={<RedoOutlined />}
       aria-label={t("buttons.undo")}
       onClick={updateData}
-      size={data?.size || "medium"}
     />
+    // <ToolButton
+    //   type="button"
+    //   icon={undo}
+    //   aria-label={t("buttons.undo")}
+    //   onClick={updateData}
+    //   size={data?.size || "medium"}
+    // />
   ),
   commitToHistory: () => false,
 });
@@ -90,13 +98,18 @@ export const createRedoAction: ActionCreator = (history) => ({
       event.key.toLowerCase() === KEYS.Z) ||
     (isWindows && event.ctrlKey && !event.shiftKey && event.key === KEYS.Y),
   PanelComponent: ({ updateData, data }) => (
-    <ToolButton
-      type="button"
-      icon={redo}
+    <Button
+      icon={<UndoOutlined />}
       aria-label={t("buttons.redo")}
       onClick={updateData}
-      size={data?.size || "medium"}
     />
+    // <ToolButton
+    //   type="button"
+    //   icon={redo}
+    //   aria-label={t("buttons.redo")}
+    //   onClick={updateData}
+    //   size={data?.size || "medium"}
+    // />
   ),
   commitToHistory: () => false,
 });

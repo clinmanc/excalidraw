@@ -82,8 +82,7 @@
   }
 
   .App-toolbar {
-    border-radius: var(--border-radius-lg);
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.01), 1px 1px 5px rgb(0 0 0 / 15%);
+    border: 1px solid #ddd;
 
     .ToolIcon {
       &:hover {
@@ -97,7 +96,6 @@
 
       .ToolIcon__icon {
         background: transparent;
-        border-radius: var(--border-radius-lg);
       }
 
       @include toolbarButtonColorStates;
