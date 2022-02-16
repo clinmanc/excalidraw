@@ -5,14 +5,14 @@
 .menu_top {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 63px;
   width: 100vw;
 }
 
 .menu_left {
   position: absolute;
   left: 0;
-  top: 36px;
+  top: 100px;
 }
 
 :root {
@@ -610,7 +610,7 @@
     textarea {
       width: 100%;
       margin: 10px 0;
-      font-family: "Cascadia";
+      //font-family: "Cascadia";
       font-size: 0.8em;
     }
   }
