@@ -205,7 +205,7 @@ export const ShapesSwitcher = ({
             checked={elementType === value}
             name="editor-current-shape"
             title={`${capitalizeString(label)} — ${shortcut}`}
-            keyBindingLabel={`${index + 1}`}
+            keyBindingLabel={``}
             aria-label={capitalizeString(label)}
             aria-keyshortcuts={shortcut}
             data-testid={value}
