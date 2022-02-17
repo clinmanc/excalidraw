@@ -100,7 +100,8 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
     //   | "submit";
     return (
       <Button
-        icon={<div className="button_icon">{props.icon}</div>}
+        className="zIndexButton"
+        icon={props.icon}
         type="text"
         data-testid={props["data-testid"]}
         aria-label={props.label}

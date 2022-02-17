@@ -20,7 +20,7 @@ import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { hasStrokeColor } from "../scene/comparisons";
 
-import { Row, Col, Divider } from "antd";
+import { Row, Col, Button, Divider, Popover } from "antd";
 
 export const SelectedShapeActions = ({
   appState,
@@ -119,43 +119,72 @@ export const SelectedShapeActions = ({
 
       <Divider type="vertical" />
 
-      <>
-        {renderAction("sendToBack")}
-        {renderAction("sendBackward")}
-        {renderAction("bringToFront")}
-        {renderAction("bringForward")}
+      <Popover
+        overlayStyle={{ width: 144 }}
+        content={
+          <Row className="excalidraw">
+            <Col span={8}>{renderAction("sendToBack")}</Col>
+            <Col span={8}>{renderAction("sendBackward")}</Col>
+            <Col span={8}>{renderAction("bringToFront")}</Col>
+            <Col span={8}>{renderAction("bringForward")}</Col>
+          </Row>
+        }
+        title={t("labels.layers")}
+        trigger="click"
+      >
+        <Button type="text">{t("labels.layers")}</Button>
+      </Popover>
 
-        <Divider type="vertical" />
-      </>
+      <Divider type="vertical" />
 
       {targetElements.length > 1 && (
         // {t("labels.align")}
-        <Stack.Row>
-          {
-            // swap this order for RTL so the button positions always match their action
-            // (i.e. the leftmost button aligns left)
-          }
-          {isRTL ? (
-            <>
-              {renderAction("alignRight")}
-              {renderAction("alignHorizontallyCentered")}
-              {renderAction("alignLeft")}
-            </>
-          ) : (
-            <>
-              {renderAction("alignLeft")}
-              {renderAction("alignHorizontallyCentered")}
-              {renderAction("alignRight")}
-            </>
-          )}
-          {targetElements.length > 2 && renderAction("distributeHorizontally")}
-          <div className="iconRow">
-            {renderAction("alignTop")}
-            {renderAction("alignVerticallyCentered")}
-            {renderAction("alignBottom")}
-            {targetElements.length > 2 && renderAction("distributeVertically")}
-          </div>
-        </Stack.Row>
+
+        <>
+          <Popover
+            overlayStyle={{ width: 144 }}
+            content={
+              <Row className="excalidraw">
+                {
+                  // swap this order for RTL so the button positions always match their action
+                  // (i.e. the leftmost button aligns left)
+                }
+                {isRTL ? (
+                  <>
+                    <Col span={8}>{renderAction("alignRight")}</Col>
+                    <Col span={8}>
+                      {renderAction("alignHorizontallyCentered")}
+                    </Col>
+                    <Col span={8}>{renderAction("alignLeft")}</Col>
+                  </>
+                ) : (
+                  <>
+                    <Col span={8}>{renderAction("alignLeft")}</Col>
+                    <Col span={8}>
+                      {renderAction("alignHorizontallyCentered")}
+                    </Col>
+                    <Col span={8}>{renderAction("alignRight")}</Col>
+                  </>
+                )}
+                {targetElements.length > 2 && (
+                  <Col span={8}>{renderAction("distributeHorizontally")}</Col>
+                )}
+                <Col span={8}>{renderAction("alignTop")}</Col>
+                <Col span={8}>{renderAction("alignVerticallyCentered")}</Col>
+                <Col span={8}>{renderAction("alignBottom")}</Col>
+                {targetElements.length > 2 && (
+                  <Col span={8}>{renderAction("distributeVertically")}</Col>
+                )}
+              </Row>
+            }
+            title={t("labels.align")}
+            trigger="click"
+          >
+            <Button type="text">{t("labels.align")}</Button>
+          </Popover>
+
+          <Divider type="vertical" />
+        </>
       )}
       {!isMobile && !isEditing && targetElements.length > 0 && (
         <>
