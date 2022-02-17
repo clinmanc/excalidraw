@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import styles from "./styles.module.scss";
+import Link from "@mui/material/Link";
 
 // export interface NavItem {
 //   text: string;
@@ -18,10 +19,14 @@ const TopShow: FC = () => {
 
       {/* 横版 nav */}
       <span className={styles.ul}>
-        <i className={styles.red}>登陆</i>
+        <Link className={styles.red} href="#/home">
+          首页
+        </Link>
       </span>
       <span className={styles.ul}>
-        <i className={styles.tencent}>免费注册</i>
+        <Link className={styles.tencent} href="#/login">
+          登陆
+        </Link>
       </span>
       {/*<ul className={styles.ul}>*/}
       {/*  <Button*/}
