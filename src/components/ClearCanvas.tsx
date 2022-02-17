@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { t } from "../i18n";
-// import { useIsMobile } from "./App";
+import { useIsMobile } from "./App";
 // import { trash } from "./icons";
-// import { ToolButton } from "./ToolButton";
+import { ToolButton } from "./ToolButton";
 
 // import ConfirmDialog from "./ConfirmDialog";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 const ClearCanvas = ({ onConfirm }: { onConfirm: () => void }) => {
@@ -16,23 +16,15 @@ const ClearCanvas = ({ onConfirm }: { onConfirm: () => void }) => {
 
   return (
     <>
-      <Button
+      <ToolButton
+        type="button"
         icon={<DeleteOutlined />}
-        type="text"
-        aria-label={t("buttons.clearReset")}
-        // showAriaLabel={useIsMobile()}
         title={t("buttons.clearReset")}
+        aria-label={t("buttons.clearReset")}
+        showAriaLabel={useIsMobile()}
         onClick={toggleDialog}
+        data-testid="clear-canvas-button"
       />
-      {/*<ToolButton*/}
-      {/*  type="button"*/}
-      {/*  icon={trash}*/}
-      {/*  title={t("buttons.clearReset")}*/}
-      {/*  aria-label={t("buttons.clearReset")}*/}
-      {/*  showAriaLabel={useIsMobile()}*/}
-      {/*  onClick={toggleDialog}*/}
-      {/*  data-testid="clear-canvas-button"*/}
-      {/*/>*/}
 
       {
         <Modal
@@ -43,8 +35,8 @@ const ClearCanvas = ({ onConfirm }: { onConfirm: () => void }) => {
             toggleDialog();
           }}
           onCancel={toggleDialog}
-          okText="确认"
-          cancelText="取消"
+          okText={t("buttons.confirm")}
+          cancelText={t("buttons.cancel")}
         >
           <p className="clear-canvas__content"> {t("alerts.clearReset")}</p>
         </Modal>

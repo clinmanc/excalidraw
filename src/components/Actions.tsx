@@ -129,37 +129,33 @@ export const SelectedShapeActions = ({
       </>
 
       {targetElements.length > 1 && (
-        <fieldset>
-          {/*<legend>{t("labels.align")}</legend>*/}
-          <Stack.Row>
-            {
-              // swap this order for RTL so the button positions always match their action
-              // (i.e. the leftmost button aligns left)
-            }
-            {isRTL ? (
-              <>
-                {renderAction("alignRight")}
-                {renderAction("alignHorizontallyCentered")}
-                {renderAction("alignLeft")}
-              </>
-            ) : (
-              <>
-                {renderAction("alignLeft")}
-                {renderAction("alignHorizontallyCentered")}
-                {renderAction("alignRight")}
-              </>
-            )}
-            {targetElements.length > 2 &&
-              renderAction("distributeHorizontally")}
-            <div className="iconRow">
-              {renderAction("alignTop")}
-              {renderAction("alignVerticallyCentered")}
-              {renderAction("alignBottom")}
-              {targetElements.length > 2 &&
-                renderAction("distributeVertically")}
-            </div>
-          </Stack.Row>
-        </fieldset>
+        // {t("labels.align")}
+        <Stack.Row>
+          {
+            // swap this order for RTL so the button positions always match their action
+            // (i.e. the leftmost button aligns left)
+          }
+          {isRTL ? (
+            <>
+              {renderAction("alignRight")}
+              {renderAction("alignHorizontallyCentered")}
+              {renderAction("alignLeft")}
+            </>
+          ) : (
+            <>
+              {renderAction("alignLeft")}
+              {renderAction("alignHorizontallyCentered")}
+              {renderAction("alignRight")}
+            </>
+          )}
+          {targetElements.length > 2 && renderAction("distributeHorizontally")}
+          <div className="iconRow">
+            {renderAction("alignTop")}
+            {renderAction("alignVerticallyCentered")}
+            {renderAction("alignBottom")}
+            {targetElements.length > 2 && renderAction("distributeVertically")}
+          </div>
+        </Stack.Row>
       )}
       {!isMobile && !isEditing && targetElements.length > 0 && (
         <>
