@@ -100,6 +100,7 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
     //   | "submit";
     return (
       <Button
+        className="zIndexButton"
         icon={props.icon}
         type="text"
         data-testid={props["data-testid"]}
@@ -186,9 +187,9 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
       />
       <div className="ToolIcon__icon">
         {props.icon}
-        {props.keyBindingLabel && (
-          <span className="ToolIcon__keybinding">{props.keyBindingLabel}</span>
-        )}
+        {/*{props.keyBindingLabel && (*/}
+        {/*  <span className="ToolIcon__keybinding">{props.keyBindingLabel}</span>*/}
+        {/*)}*/}
       </div>
     </label>
   );

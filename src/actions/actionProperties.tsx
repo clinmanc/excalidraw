@@ -74,7 +74,7 @@ import { hasStrokeColor } from "../scene/comparisons";
 import { arrayToMap } from "../utils";
 import { register } from "./register";
 import { Tooltip } from "../components/Tooltip";
-import { Popover, Slider } from "antd";
+import { Button, Popover, Slider } from "antd";
 
 const FONT_SIZE_RELATIVE_INCREASE_STEP = 0.1;
 
@@ -530,7 +530,7 @@ export const actionChangeOpacity = register({
         title={t("labels.opacity")}
         trigger="click"
       >
-        <div style={{ cursor: "pointer" }}>
+        <Button type="text">
           {getFormValue(
             elements,
             appState,
@@ -538,7 +538,7 @@ export const actionChangeOpacity = register({
             appState.currentItemOpacity,
           ) ?? undefined}
           %
-        </div>
+        </Button>
       </Popover>
     </Tooltip>
   ),

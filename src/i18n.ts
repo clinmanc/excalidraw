@@ -52,7 +52,7 @@ const allLanguages: Language[] = [
   { code: "uk-UA", label: "Українська" },
   { code: "zh-CN", label: "简体中文" },
   { code: "zh-TW", label: "繁體中文" },
-].concat([defaultLang]);
+];
 
 export const languages: Language[] = allLanguages
   .sort((left, right) => (left.label > right.label ? 1 : -1))
