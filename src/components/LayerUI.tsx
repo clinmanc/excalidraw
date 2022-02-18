@@ -197,7 +197,7 @@ const LayerUI = ({
       {actionManager.renderAction("clearCanvas")}
       <Separator />
       {actionManager.renderAction("loadScene")}
-      {renderJSONExportDialog()}
+      {/*{renderJSONExportDialog()}*/}
       {renderImageExportDialog()}
       {/*<Separator />*/}
       {/*{onCollabButtonClick && (*/}
