@@ -193,10 +193,10 @@ export const SelectedShapeActions = ({
           <Divider type="vertical" />
         </>
       )}
-      {!isMobile && !isEditing && targetElements.length > 0 && (
+      {!isEditing && targetElements.length > 0 && (
         <>
-          {renderAction("duplicateSelection")}
-          {renderAction("deleteSelectedElements")}
+          {!isMobile && renderAction("duplicateSelection")}
+          {!isMobile && renderAction("deleteSelectedElements")}
           {renderAction("group")}
           {renderAction("ungroup")}
           {targetElements.length === 1 && renderAction("link")}
