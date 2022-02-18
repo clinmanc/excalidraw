@@ -451,7 +451,7 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   public render() {
-    const { zenModeEnabled, viewModeEnabled } = this.state;
+    const { sketchModeEnabled, zenModeEnabled, viewModeEnabled } = this.state;
     const selectedElement = getSelectedElements(
       this.scene.getElements(),
       this.state,
@@ -489,6 +489,8 @@ class App extends React.Component<AppProps, AppState> {
               elements={this.scene.getElements()}
               onCollabButtonClick={onCollabButtonClick}
               onLockToggle={this.toggleLock}
+              sketchModeEnabled={sketchModeEnabled}
+              toggleSketchMode={this.toggleSketchMode}
               onPenModeToggle={this.togglePenMode}
               onInsertElements={(elements) =>
                 this.addElementsFromPasteOrLibrary({
@@ -1549,6 +1551,14 @@ class App extends React.Component<AppProps, AppState> {
         elementType: prevState.elementLocked
           ? "selection"
           : prevState.elementType,
+      };
+    });
+  };
+
+  toggleSketchMode = () => {
+    this.setState((prevState) => {
+      return {
+        sketchModeEnabled: !prevState.sketchModeEnabled,
       };
     });
   };

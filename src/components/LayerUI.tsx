@@ -36,7 +36,8 @@ import "./LayerUI.scss";
 import "./Toolbar.scss";
 import { PenModeButton } from "./PenModeButton";
 
-import { Card } from "antd";
+import { Button, Card } from "antd";
+import { HighlightOutlined } from "@ant-design/icons";
 
 interface LayerUIProps {
   actionManager: ActionManager;
@@ -47,6 +48,8 @@ interface LayerUIProps {
   elements: readonly NonDeletedExcalidrawElement[];
   onCollabButtonClick?: () => void;
   onLockToggle: () => void;
+  sketchModeEnabled: boolean;
+  toggleSketchMode: () => void;
   onPenModeToggle: () => void;
   onInsertElements: (elements: readonly NonDeletedExcalidrawElement[]) => void;
   zenModeEnabled: boolean;
@@ -78,6 +81,8 @@ const LayerUI = ({
   elements,
   onCollabButtonClick,
   onLockToggle,
+  sketchModeEnabled,
+  toggleSketchMode,
   onPenModeToggle,
   onInsertElements,
   zenModeEnabled,
@@ -178,7 +183,7 @@ const LayerUI = ({
         <Island padding={2} style={{ zIndex: 1 }}>
           <Stack.Col gap={4}>
             <Stack.Row gap={1} justifyContent="space-between">
-              {renderJSONExportDialog()}
+              {/*{renderJSONExportDialog()}*/}
               {renderImageExportDialog()}
             </Stack.Row>
           </Stack.Col>
@@ -320,6 +325,12 @@ const LayerUI = ({
               {/*  </UserList>*/}
               {/*  {renderTopRightUI?.(isMobile, appState)}*/}
               {/*</div>*/}
+              <Button
+                type={sketchModeEnabled ? "primary" : "text"}
+                icon={<HighlightOutlined />}
+                title="草图模式"
+                onClick={toggleSketchMode}
+              />
             </Stack.Row>
             <HintViewer
               appState={appState}
@@ -382,17 +393,17 @@ const LayerUI = ({
   const renderRightAppMenu = () => {
     return (
       <Stack.Row>
-        <div
-          className={clsx(
-            "layer-ui__wrapper__footer-center zen-mode-transition",
-            {
-              "layer-ui__wrapper__footer-left--transition-bottom":
-                zenModeEnabled,
-            },
-          )}
-        >
-          {renderCustomFooter?.(false, appState)}
-        </div>
+        {/*<div*/}
+        {/*  className={clsx(*/}
+        {/*    "layer-ui__wrapper__footer-center zen-mode-transition",*/}
+        {/*    {*/}
+        {/*      "layer-ui__wrapper__footer-left--transition-bottom":*/}
+        {/*        zenModeEnabled,*/}
+        {/*    },*/}
+        {/*  )}*/}
+        {/*>*/}
+        {/*  {renderCustomFooter?.(false, appState)}*/}
+        {/*</div>*/}
         <div
           className={clsx(
             "layer-ui__wrapper__footer-right zen-mode-transition",

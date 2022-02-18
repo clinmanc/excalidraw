@@ -37,6 +37,7 @@ export const SelectedShapeActions = ({
     getNonDeletedElements(elements),
     appState,
   );
+  const sketchModeEnabled = appState.sketchModeEnabled;
   const isEditing = Boolean(appState.editingElement);
   const isMobile = useIsMobile();
   const isRTL = document.documentElement.getAttribute("dir") === "rtl";
@@ -68,34 +69,40 @@ export const SelectedShapeActions = ({
         targetElements.some((element) => hasStrokeColor(element.type))) &&
         renderAction("changeStrokeColor")}
       {showChangeBackgroundIcons && renderAction("changeBackgroundColor")}
-      {showFillIcons && renderAction("changeFillStyle")}
+      {sketchModeEnabled && showFillIcons && renderAction("changeFillStyle")}
 
       <Divider type="vertical" />
 
-      {(hasStrokeWidth(elementType) ||
-        targetElements.some((element) => hasStrokeWidth(element.type))) &&
+      {sketchModeEnabled &&
+        (hasStrokeWidth(elementType) ||
+          targetElements.some((element) => hasStrokeWidth(element.type))) &&
         renderAction("changeStrokeWidth")}
 
-      {(elementType === "freedraw" ||
-        targetElements.some((element) => element.type === "freedraw")) &&
+      {sketchModeEnabled &&
+        (elementType === "freedraw" ||
+          targetElements.some((element) => element.type === "freedraw")) &&
         renderAction("changeStrokeShape")}
 
-      {(hasStrokeStyle(elementType) ||
-        targetElements.some((element) => hasStrokeStyle(element.type))) && (
-        <>
-          {renderAction("changeStrokeStyle")}
-          {renderAction("changeSloppiness")}
-        </>
-      )}
+      {sketchModeEnabled &&
+        (hasStrokeStyle(elementType) ||
+          targetElements.some((element) => hasStrokeStyle(element.type))) && (
+          <>
+            {renderAction("changeStrokeStyle")}
+            {renderAction("changeSloppiness")}
+          </>
+        )}
 
-      {(canChangeSharpness(elementType) ||
-        targetElements.some((element) => canChangeSharpness(element.type))) && (
-        <>
-          {renderAction("changeSharpness")}
+      {sketchModeEnabled &&
+        (canChangeSharpness(elementType) ||
+          targetElements.some((element) =>
+            canChangeSharpness(element.type),
+          )) && (
+          <>
+            {renderAction("changeSharpness")}
 
-          <Divider type="vertical" />
-        </>
-      )}
+            <Divider type="vertical" />
+          </>
+        )}
 
       {(hasText(elementType) ||
         targetElements.some((element) => hasText(element.type))) && (

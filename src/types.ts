@@ -120,6 +120,7 @@ export type AppState = {
   shouldCacheIgnoreZoom: boolean;
   showHelpDialog: boolean;
   toastMessage: string | null;
+  sketchModeEnabled: boolean;
   zenModeEnabled: boolean;
   theme: Theme;
   gridSize: number | null;
