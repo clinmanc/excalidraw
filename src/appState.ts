@@ -78,6 +78,7 @@ export const getDefaultAppState = (): Omit<
     suggestedBindings: [],
     toastMessage: null,
     viewBackgroundColor: oc.white,
+    sketchModeEnabled: false,
     zenModeEnabled: false,
     zoom: {
       value: 1 as NormalizedZoomValue,
@@ -171,6 +172,7 @@ const APP_STATE_STORAGE_CONF = (<
   toastMessage: { browser: false, export: false, server: false },
   viewBackgroundColor: { browser: true, export: true, server: true },
   width: { browser: false, export: false, server: false },
+  sketchModeEnabled: { browser: true, export: false, server: false },
   zenModeEnabled: { browser: true, export: false, server: false },
   zoom: { browser: true, export: false, server: false },
   viewModeEnabled: { browser: false, export: false, server: false },

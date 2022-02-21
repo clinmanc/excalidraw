@@ -6,3 +6,4 @@ firebase/
 dist/
 public/workbox
 src/packages/excalidraw/types
+src/

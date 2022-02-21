@@ -115,11 +115,7 @@ import {
   updateBoundElements,
 } from "../element/binding";
 import { LinearElementEditor } from "../element/linearElementEditor";
-import {
-  bumpVersion,
-  mutateElement,
-  newElementWith,
-} from "../element/mutateElement";
+import { mutateElement, newElementWith } from "../element/mutateElement";
 import { deepCopyElement, newFreeDrawElement } from "../element/newElement";
 import {
   hasBoundTextElement,
@@ -451,7 +447,7 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   public render() {
-    const { zenModeEnabled, viewModeEnabled } = this.state;
+    const { sketchModeEnabled, zenModeEnabled, viewModeEnabled } = this.state;
     const selectedElement = getSelectedElements(
       this.scene.getElements(),
       this.state,
@@ -489,6 +485,8 @@ class App extends React.Component<AppProps, AppState> {
               elements={this.scene.getElements()}
               onCollabButtonClick={onCollabButtonClick}
               onLockToggle={this.toggleLock}
+              sketchModeEnabled={sketchModeEnabled}
+              toggleSketchMode={this.toggleSketchMode}
               onPenModeToggle={this.togglePenMode}
               onInsertElements={(elements) =>
                 this.addElementsFromPasteOrLibrary({
@@ -1553,6 +1551,14 @@ class App extends React.Component<AppProps, AppState> {
     });
   };
 
+  toggleSketchMode = () => {
+    this.setState((prevState) => {
+      return {
+        sketchModeEnabled: !prevState.sketchModeEnabled,
+      };
+    });
+  };
+
   togglePenMode = () => {
     this.setState((prevState) => {
       return {
@@ -1620,9 +1626,6 @@ class App extends React.Component<AppProps, AppState> {
 
       this.files = { ...this.files, ...Object.fromEntries(filesMap) };
 
-      // bump versions for elements that reference added files so that
-      // we/host apps can detect the change, and invalidate the image & shape
-      // cache
       this.scene.getElements().forEach((element) => {
         if (
           isInitializedImageElement(element) &&
@@ -1630,7 +1633,6 @@ class App extends React.Component<AppProps, AppState> {
         ) {
           this.imageCache.delete(element.fileId);
           invalidateShapeForElement(element);
-          bumpVersion(element);
         }
       });
       this.scene.informMutation();
@@ -2418,13 +2420,13 @@ class App extends React.Component<AppProps, AppState> {
       this.lastPointerUp!,
       this.state,
     );
-    const LastPointerUpHittingLinkIcon = isPointHittingLinkIcon(
+    const lastPointerUpHittingLinkIcon = isPointHittingLinkIcon(
       this.hitLinkElement!,
       this.state,
       [lastPointerUpCoords.x, lastPointerUpCoords.y],
       this.isMobile,
     );
-    if (lastPointerDownHittingLinkIcon && LastPointerUpHittingLinkIcon) {
+    if (lastPointerDownHittingLinkIcon && lastPointerUpHittingLinkIcon) {
       const url = this.hitLinkElement.link;
       if (url) {
         let customEvent;
