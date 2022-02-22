@@ -617,49 +617,49 @@ const ExcalidrawWrapper = () => {
       //   </a>
       // );
 
-      const renderLanguageList = () => (
-        <LanguageList
-          onChange={(langCode) => setLangCode(langCode)}
-          languages={languages}
-          currentLangCode={langCode}
-        />
-      );
-      if (isMobile) {
-        const isTinyDevice = window.innerWidth < 362;
-        return (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: isTinyDevice ? "column" : "row",
-            }}
-          >
-            <fieldset>
-              <legend>{t("labels.language")}</legend>
-              {renderLanguageList()}
-            </fieldset>
-            {/* FIXME remove after 2021-05-20 */}
-            <div
-              style={{
-                width: "24ch",
-                fontSize: "0.7em",
-                textAlign: "center",
-                marginTop: isTinyDevice ? 16 : undefined,
-                marginLeft: "auto",
-                marginRight: isTinyDevice ? "auto" : undefined,
-                padding: "4px 2px",
-                border: "1px dashed #aaa",
-                borderRadius: 12,
-              }}
-            >
-              {PlusLinkJSX}
-            </div>
-          </div>
-        );
-      }
+      // const renderLanguageList = () => (
+      //   <LanguageList
+      //     onChange={(langCode) => setLangCode(langCode)}
+      //     languages={languages}
+      //     currentLangCode={langCode}
+      //   />
+      // );
+      // if (isMobile) {
+      //   const isTinyDevice = window.innerWidth < 362;
+      //   return (
+      //     <div
+      //       style={{
+      //         display: "flex",
+      //         flexDirection: isTinyDevice ? "column" : "row",
+      //       }}
+      //     >
+      //       <fieldset>
+      //         <legend>{t("labels.language")}</legend>
+      //         {renderLanguageList()}
+      //       </fieldset>
+      //       {/* FIXME remove after 2021-05-20 */}
+      //       <div
+      //         style={{
+      //           width: "24ch",
+      //           fontSize: "0.7em",
+      //           textAlign: "center",
+      //           marginTop: isTinyDevice ? 16 : undefined,
+      //           marginLeft: "auto",
+      //           marginRight: isTinyDevice ? "auto" : undefined,
+      //           padding: "4px 2px",
+      //           border: "1px dashed #aaa",
+      //           borderRadius: 12,
+      //         }}
+      //       >
+      //         {PlusLinkJSX}
+      //       </div>
+      //     </div>
+      //   );
+      // }
       return (
         <>
           {/*{renderEncryptedIcon()}*/}
-          {renderLanguageList()}
+          {/*{renderLanguageList()}*/}
         </>
       );
     },

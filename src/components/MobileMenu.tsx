@@ -5,19 +5,21 @@ import { t } from "../i18n";
 import Stack from "./Stack";
 import { showSelectedShapeActions } from "../element";
 import { NonDeletedExcalidrawElement } from "../element/types";
-import { FixedSideContainer } from "./FixedSideContainer";
+// import { FixedSideContainer } from "./FixedSideContainer";
 import { Island } from "./Island";
 import { HintViewer } from "./HintViewer";
 import { calculateScrollCenter } from "../scene";
 import { SelectedShapeActions, ShapesSwitcher } from "./Actions";
 import { Section } from "./Section";
-import CollabButton from "./CollabButton";
+// import CollabButton from "./CollabButton";
 import { SCROLLBAR_WIDTH, SCROLLBAR_MARGIN } from "../scene/scrollbars";
-import { LockButton } from "./LockButton";
+// import { LockButton } from "./LockButton";
 import { UserList } from "./UserList";
 import { BackgroundPickerAndDarkModeToggle } from "./BackgroundPickerAndDarkModeToggle";
-import { LibraryButton } from "./LibraryButton";
-import { PenModeButton } from "./PenModeButton";
+// import { LibraryButton } from "./LibraryButton";
+// import { PenModeButton } from "./PenModeButton";
+
+import { Card } from "antd";
 
 type MobileMenuProps = {
   appState: AppState;
@@ -63,52 +65,69 @@ export const MobileMenu = ({
 }: MobileMenuProps) => {
   const renderToolbar = () => {
     return (
-      <FixedSideContainer side="top" className="App-top-bar">
+      <Card title="基础图形" style={{ width: 120 }} size="small">
         <Section heading="shapes">
           {(heading) => (
-            <Stack.Col gap={4} align="center">
-              <Stack.Row gap={1} className="App-toolbar-container">
-                <Island padding={1} className="App-toolbar">
-                  {heading}
-                  <Stack.Row gap={1}>
-                    <ShapesSwitcher
-                      canvas={canvas}
-                      elementType={appState.elementType}
-                      setAppState={setAppState}
-                      onImageAction={({ pointerType }) => {
-                        onImageAction({
-                          insertOnCanvasDirectly: pointerType !== "mouse",
-                        });
-                      }}
-                    />
-                  </Stack.Row>
-                </Island>
-                {renderTopRightUI && renderTopRightUI(true, appState)}
-                <LockButton
-                  checked={appState.elementLocked}
-                  onChange={onLockToggle}
-                  title={t("toolBar.lock")}
-                  isMobile
-                />
-                <LibraryButton
-                  appState={appState}
-                  setAppState={setAppState}
-                  isMobile
-                />
-                <PenModeButton
-                  checked={appState.penMode}
-                  onChange={onPenModeToggle}
-                  title={t("toolBar.penMode")}
-                  isMobile
-                  penDetected={appState.penDetected}
-                />
-              </Stack.Row>
-              {libraryMenu}
-            </Stack.Col>
+            // {heading}
+            <ShapesSwitcher
+              canvas={canvas}
+              elementType={appState.elementType}
+              setAppState={setAppState}
+              onImageAction={({ pointerType }) => {
+                onImageAction({
+                  insertOnCanvasDirectly: pointerType !== "mouse",
+                });
+              }}
+            />
           )}
         </Section>
-        <HintViewer appState={appState} elements={elements} isMobile={true} />
-      </FixedSideContainer>
+      </Card>
+      // <FixedSideContainer side="top" className="App-top-bar">
+      //   <Section heading="shapes">
+      //     {(heading) => (
+      //       <Stack.Col gap={4} align="center">
+      //         <Stack.Row gap={1} className="App-toolbar-container">
+      //           <Island padding={1} className="App-toolbar">
+      //             {heading}
+      //             <Stack.Row gap={1}>
+      //               <ShapesSwitcher
+      //                 canvas={canvas}
+      //                 elementType={appState.elementType}
+      //                 setAppState={setAppState}
+      //                 onImageAction={({ pointerType }) => {
+      //                   onImageAction({
+      //                     insertOnCanvasDirectly: pointerType !== "mouse",
+      //                   });
+      //                 }}
+      //               />
+      //             </Stack.Row>
+      //           </Island>
+      //           {renderTopRightUI && renderTopRightUI(true, appState)}
+      //           <LockButton
+      //             checked={appState.elementLocked}
+      //             onChange={onLockToggle}
+      //             title={t("toolBar.lock")}
+      //             isMobile
+      //           />
+      //           <LibraryButton
+      //             appState={appState}
+      //             setAppState={setAppState}
+      //             isMobile
+      //           />
+      //           <PenModeButton
+      //             checked={appState.penMode}
+      //             onChange={onPenModeToggle}
+      //             title={t("toolBar.penMode")}
+      //             isMobile
+      //             penDetected={appState.penDetected}
+      //           />
+      //         </Stack.Row>
+      //         {libraryMenu}
+      //       </Stack.Col>
+      //     )}
+      //   </Section>
+      //   <HintViewer appState={appState} elements={elements} isMobile={true} />
+      // </FixedSideContainer>
     );
   };
 
@@ -147,15 +166,15 @@ export const MobileMenu = ({
       <>
         {actionManager.renderAction("clearCanvas")}
         {actionManager.renderAction("loadScene")}
-        {renderJSONExportDialog()}
+        {/*{renderJSONExportDialog()}*/}
         {renderImageExportDialog()}
-        {onCollabButtonClick && (
-          <CollabButton
-            isCollaborating={isCollaborating}
-            collaboratorCount={appState.collaborators.size}
-            onClick={onCollabButtonClick}
-          />
-        )}
+        {/*{onCollabButtonClick && (*/}
+        {/*  <CollabButton*/}
+        {/*    isCollaborating={isCollaborating}*/}
+        {/*    collaboratorCount={appState.collaborators.size}*/}
+        {/*    onClick={onCollabButtonClick}*/}
+        {/*  />*/}
+        {/*)}*/}
         {
           <BackgroundPickerAndDarkModeToggle
             actionManager={actionManager}
