@@ -101,11 +101,7 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
     //   | "button"
     //   | "submit";
     return (
-      <Tooltip
-        title={props.title}
-        placement="right"
-        mouseEnterDelay={2}
-      >
+      <Tooltip title={props.title} placement="right" mouseEnterDelay={2}>
         <Button
           className="zIndexButton e-icon-button"
           icon={props.icon}
@@ -166,39 +162,40 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
   }
 
   return (
-    <label
-      className={clsx("ToolIcon", props.className)}
-      title={props.title}
-      onPointerDown={(event) => {
-        lastPointerTypeRef.current = event.pointerType || null;
-      }}
-      onPointerUp={() => {
-        requestAnimationFrame(() => {
-          lastPointerTypeRef.current = null;
-        });
-      }}
-    >
-      <input
-        className={`ToolIcon_type_radio ${sizeCn}`}
-        type="radio"
-        name={props.name}
-        aria-label={props["aria-label"]}
-        aria-keyshortcuts={props["aria-keyshortcuts"]}
-        data-testid={props["data-testid"]}
-        id={`${excalId}-${props.id}`}
-        onChange={() => {
-          props.onChange?.({ pointerType: lastPointerTypeRef.current });
+    <Tooltip title={props.title} placement="right" mouseEnterDelay={2}>
+      <label
+        className={clsx("ToolIcon", props.className)}
+        onPointerDown={(event) => {
+          lastPointerTypeRef.current = event.pointerType || null;
         }}
-        checked={props.checked}
-        ref={innerRef}
-      />
-      <div className="ToolIcon__icon">
-        {props.icon}
-        {/*{props.keyBindingLabel && (*/}
-        {/*  <span className="ToolIcon__keybinding">{props.keyBindingLabel}</span>*/}
-        {/*)}*/}
-      </div>
-    </label>
+        onPointerUp={() => {
+          requestAnimationFrame(() => {
+            lastPointerTypeRef.current = null;
+          });
+        }}
+      >
+        <input
+          className={`ToolIcon_type_radio ${sizeCn}`}
+          type="radio"
+          name={props.name}
+          aria-label={props["aria-label"]}
+          aria-keyshortcuts={props["aria-keyshortcuts"]}
+          data-testid={props["data-testid"]}
+          id={`${excalId}-${props.id}`}
+          onChange={() => {
+            props.onChange?.({ pointerType: lastPointerTypeRef.current });
+          }}
+          checked={props.checked}
+          ref={innerRef}
+        />
+        <div className="ToolIcon__icon">
+          {props.icon}
+          {/*{props.keyBindingLabel && (*/}
+          {/*  <span className="ToolIcon__keybinding">{props.keyBindingLabel}</span>*/}
+          {/*)}*/}
+        </div>
+      </label>
+    </Tooltip>
   );
 });
 
