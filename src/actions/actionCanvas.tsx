@@ -31,6 +31,7 @@ export const actionChangeViewBackgroundColor = register({
     return (
       <div style={{ position: "relative" }}>
         <ColorPicker
+          icon={<div></div>}
           label={t("labels.canvasBackground")}
           type="canvasBackground"
           color={appState.viewBackgroundColor}

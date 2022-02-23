@@ -50,7 +50,8 @@
 
     svg {
       position: relative;
-      height: 1em;
+      width: 24px;
+      height: 24px;
       fill: var(--icon-fill-color);
       color: var(--icon-fill-color);
     }
@@ -121,7 +122,8 @@
     pointer-events: none;
 
     &:not(.ToolIcon_toggle_opaque):checked + .ToolIcon__icon {
-      background-color: var(--button-gray-2);
+      background-color: var(--color-primary);
+      --icon-fill-color: #{$oc-white};
       &:active {
         background-color: var(--button-gray-3);
       }

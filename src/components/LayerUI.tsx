@@ -271,77 +271,75 @@ const LayerUI = ({
     return (
       <>
         {/*<FixedSideContainer side="top">*/}
-        <div className="menu_top">
-          <Card size="small" style={{ width: "100vw" }}>
-            <Stack.Row
-              gap={4}
-              className={clsx({ "disable-pointerEvents": zenModeEnabled })}
-            >
-              <Section heading="canvasActions">
-                {!viewModeEnabled && (
-                  <div
-                    className={clsx("undo-redo-buttons zen-mode-transition", {
-                      "layer-ui__wrapper__footer-left--transition-bottom":
-                        zenModeEnabled,
-                    })}
-                  >
-                    {actionManager.renderAction("undo", { size: "small" })}
-                    {actionManager.renderAction("redo", { size: "small" })}
-                  </div>
-                )}
-              </Section>
-              {viewModeEnabled
-                ? renderViewModeCanvasActions()
-                : renderCanvasActions()}
-              {shouldRenderSelectedShapeActions && renderSelectedShapeActions()}
-              <ZoomActions
-                renderAction={actionManager.renderAction}
-                zoom={appState.zoom}
-              />
-              {renderRightAppMenu()}
-              {/*<div*/}
-              {/*  className={clsx(*/}
-              {/*    "layer-ui__wrapper__top-right zen-mode-transition",*/}
-              {/*    {*/}
-              {/*      "transition-right": zenModeEnabled,*/}
-              {/*    },*/}
-              {/*  )}*/}
-              {/*>*/}
-              {/*  <UserList>*/}
-              {/*    {appState.collaborators.size > 0 &&*/}
-              {/*      Array.from(appState.collaborators)*/}
-              {/*        // Collaborator is either not initialized or is actually the current user.*/}
-              {/*        .filter(([_, client]) => Object.keys(client).length !== 0)*/}
-              {/*        .map(([clientId, client]) => (*/}
-              {/*          <Tooltip*/}
-              {/*            label={client.username || "Unknown user"}*/}
-              {/*            key={clientId}*/}
-              {/*          >*/}
-              {/*            {actionManager.renderAction("goToCollaborator", {*/}
-              {/*              id: clientId,*/}
-              {/*            })}*/}
-              {/*          </Tooltip>*/}
-              {/*        ))}*/}
-              {/*  </UserList>*/}
-              {/*  {renderTopRightUI?.(isMobile, appState)}*/}
-              {/*</div>*/}
-              <Button
-                type={sketchModeEnabled ? "primary" : "text"}
-                icon={<HighlightOutlined />}
-                title="草图模式"
-                onClick={toggleSketchMode}
-              />
-            </Stack.Row>
-            <HintViewer
-              appState={appState}
-              elements={elements}
-              isMobile={isMobile}
+        <Card className="e-menu__top e-card" size="small" bordered={false}>
+          <Stack.Row
+            gap={4}
+            className={clsx({ "disable-pointerEvents": zenModeEnabled })}
+          >
+            <Section heading="canvasActions">
+              {!viewModeEnabled && (
+                <div
+                  className={clsx("undo-redo-buttons zen-mode-transition", {
+                    "layer-ui__wrapper__footer-left--transition-bottom":
+                      zenModeEnabled,
+                  })}
+                >
+                  {actionManager.renderAction("undo", { size: "small" })}
+                  {actionManager.renderAction("redo", { size: "small" })}
+                </div>
+              )}
+            </Section>
+            {viewModeEnabled
+              ? renderViewModeCanvasActions()
+              : renderCanvasActions()}
+            {shouldRenderSelectedShapeActions && renderSelectedShapeActions()}
+            <ZoomActions
+              renderAction={actionManager.renderAction}
+              zoom={appState.zoom}
             />
-          </Card>
-        </div>
+            {renderRightAppMenu()}
+            {/*<div*/}
+            {/*  className={clsx(*/}
+            {/*    "layer-ui__wrapper__top-right zen-mode-transition",*/}
+            {/*    {*/}
+            {/*      "transition-right": zenModeEnabled,*/}
+            {/*    },*/}
+            {/*  )}*/}
+            {/*>*/}
+            {/*  <UserList>*/}
+            {/*    {appState.collaborators.size > 0 &&*/}
+            {/*      Array.from(appState.collaborators)*/}
+            {/*        // Collaborator is either not initialized or is actually the current user.*/}
+            {/*        .filter(([_, client]) => Object.keys(client).length !== 0)*/}
+            {/*        .map(([clientId, client]) => (*/}
+            {/*          <Tooltip*/}
+            {/*            label={client.username || "Unknown user"}*/}
+            {/*            key={clientId}*/}
+            {/*          >*/}
+            {/*            {actionManager.renderAction("goToCollaborator", {*/}
+            {/*              id: clientId,*/}
+            {/*            })}*/}
+            {/*          </Tooltip>*/}
+            {/*        ))}*/}
+            {/*  </UserList>*/}
+            {/*  {renderTopRightUI?.(isMobile, appState)}*/}
+            {/*</div>*/}
+            <Button
+              type={sketchModeEnabled ? "primary" : "text"}
+              icon={<HighlightOutlined />}
+              title="草图模式"
+              onClick={toggleSketchMode}
+            />
+          </Stack.Row>
+          <HintViewer
+            appState={appState}
+            elements={elements}
+            isMobile={isMobile}
+          />
+        </Card>
         {/*</FixedSideContainer>*/}
         {/*<FixedSideContainer side="left">*/}
-        <div className="menu_left">
+        <div className="e-menu__left">
           {!viewModeEnabled && (
             <Section heading="shapes">
               {(heading) => (
@@ -366,7 +364,13 @@ const LayerUI = ({
                     {/*  onChange={onLockToggle}*/}
                     {/*  title={t("toolBar.lock")}*/}
                     {/*/>*/}
-                    <Card title="基础图形" style={{ width: 120 }} size="small">
+                    <Card
+                      className="e-card"
+                      title="基础图形"
+                      size="small"
+                      bordered={false}
+                      style={{ width: 120 }}
+                    >
                       {heading}
                       <ShapesSwitcher
                         canvas={canvas}

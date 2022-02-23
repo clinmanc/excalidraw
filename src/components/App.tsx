@@ -5251,7 +5251,7 @@ class App extends React.Component<AppProps, AppState> {
         typeof this.props.zenModeEnabled === "undefined" && actionToggleZenMode,
         typeof this.props.viewModeEnabled === "undefined" &&
           actionToggleViewMode,
-        actionToggleStats,
+        // actionToggleStats,
       ];
 
       if (this.state.viewModeEnabled) {
@@ -5296,7 +5296,7 @@ class App extends React.Component<AppProps, AppState> {
               actionToggleZenMode,
             typeof this.props.viewModeEnabled === "undefined" &&
               actionToggleViewMode,
-            actionToggleStats,
+            // actionToggleStats,
           ],
           top,
           left,

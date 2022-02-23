@@ -3,7 +3,7 @@ import React from "react";
 import "./IconPicker.scss";
 // import { isArrowKey, KEYS } from "../keys";
 // import { getLanguage } from "../i18n";
-import { Select } from "antd";
+import { Select, Tooltip } from "antd";
 
 const { Option } = Select;
 
@@ -152,23 +152,26 @@ export function IconPicker<T>({
   // const isRTL = getLanguage().rtl;
 
   return (
-    <Select
-      style={{ width: "40px" }}
-      showArrow={false}
-      value={value}
-      onChange={(value) => onChange(value)}
-    >
-      {options.map((option) => (
-        <Option
-          className="excalidraw"
-          key={option.text}
-          value={option.value}
-          title={option.text}
-        >
-          {option.icon}
-        </Option>
-      ))}
-    </Select>
+    <Tooltip title={label} placement="right" mouseEnterDelay={2}>
+      <Select
+        className="e-icon-select"
+        showArrow={false}
+        bordered={false}
+        value={value}
+        onChange={(value) => onChange(value)}
+      >
+        {options.map((option) => (
+          <Option
+            className="excalidraw e-icon-option"
+            key={option.text}
+            value={option.value}
+            title={option.text}
+          >
+            {option.icon}
+          </Option>
+        ))}
+      </Select>
+    </Tooltip>
     // <label className={"picker-container"}>
     //   <button
     //     name={group}

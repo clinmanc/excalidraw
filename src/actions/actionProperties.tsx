@@ -30,6 +30,9 @@ import {
   TextAlignCenterIcon,
   TextAlignLeftIcon,
   TextAlignRightIcon,
+  OpacityIcon,
+  BorderColorIcon,
+  BackgroundColorIcon,
 } from "../components/icons";
 import {
   DEFAULT_FONT_FAMILY,
@@ -73,8 +76,8 @@ import {
 import { hasStrokeColor } from "../scene/comparisons";
 import { arrayToMap } from "../utils";
 import { register } from "./register";
-import { Tooltip } from "../components/Tooltip";
-import { Button, Popover, Slider } from "antd";
+import { Button, Popover, Slider, Tooltip } from "antd";
+import React from "react";
 
 const FONT_SIZE_RELATIVE_INCREASE_STEP = 0.1;
 
@@ -219,23 +222,33 @@ export const actionChangeStrokeColor = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.stroke")}>
-      <ColorPicker
-        type="elementStroke"
-        label={t("labels.stroke")}
-        color={getFormValue(
-          elements,
-          appState,
-          (element) => element.strokeColor,
-          appState.currentItemStrokeColor,
-        )}
-        onChange={(color) => updateData({ currentItemStrokeColor: color })}
-        isActive={appState.openPopup === "strokeColorPicker"}
-        setActive={(active) =>
-          updateData({ openPopup: active ? "strokeColorPicker" : null })
-        }
-      />
-    </Tooltip>
+    <ColorPicker
+      type="elementStroke"
+      icon={
+        <BorderColorIcon
+          theme={
+            getFormValue(
+              elements,
+              appState,
+              (element) => element.strokeColor,
+              appState.currentItemStrokeColor,
+            ) || ""
+          }
+        />
+      }
+      label={t("labels.stroke")}
+      color={getFormValue(
+        elements,
+        appState,
+        (element) => element.strokeColor,
+        appState.currentItemStrokeColor,
+      )}
+      onChange={(color) => updateData({ currentItemStrokeColor: color })}
+      isActive={appState.openPopup === "strokeColorPicker"}
+      setActive={(active) =>
+        updateData({ openPopup: active ? "strokeColorPicker" : null })
+      }
+    />
   ),
 });
 
@@ -258,23 +271,33 @@ export const actionChangeBackgroundColor = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.background")}>
-      <ColorPicker
-        type="elementBackground"
-        label={t("labels.background")}
-        color={getFormValue(
-          elements,
-          appState,
-          (element) => element.backgroundColor,
-          appState.currentItemBackgroundColor,
-        )}
-        onChange={(color) => updateData({ currentItemBackgroundColor: color })}
-        isActive={appState.openPopup === "backgroundColorPicker"}
-        setActive={(active) =>
-          updateData({ openPopup: active ? "backgroundColorPicker" : null })
-        }
-      />
-    </Tooltip>
+    <ColorPicker
+      type="elementBackground"
+      icon={
+        <BackgroundColorIcon
+          theme={
+            getFormValue(
+              elements,
+              appState,
+              (element) => element.backgroundColor,
+              appState.currentItemBackgroundColor,
+            ) || ""
+          }
+        />
+      }
+      label={t("labels.background")}
+      color={getFormValue(
+        elements,
+        appState,
+        (element) => element.backgroundColor,
+        appState.currentItemBackgroundColor,
+      )}
+      onChange={(color) => updateData({ currentItemBackgroundColor: color })}
+      isActive={appState.openPopup === "backgroundColorPicker"}
+      setActive={(active) =>
+        updateData({ openPopup: active ? "backgroundColorPicker" : null })
+      }
+    />
   ),
 });
 
@@ -292,37 +315,36 @@ export const actionChangeFillStyle = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.fill")}>
-      <ButtonIconSelect
-        options={[
-          {
-            value: "hachure",
-            text: t("labels.hachure"),
-            icon: <FillHachureIcon theme={appState.theme} />,
-          },
-          {
-            value: "cross-hatch",
-            text: t("labels.crossHatch"),
-            icon: <FillCrossHatchIcon theme={appState.theme} />,
-          },
-          {
-            value: "solid",
-            text: t("labels.solid"),
-            icon: <FillSolidIcon theme={appState.theme} />,
-          },
-        ]}
-        group="fill"
-        value={getFormValue(
-          elements,
-          appState,
-          (element) => element.fillStyle,
-          appState.currentItemFillStyle,
-        )}
-        onChange={(value) => {
-          updateData(value);
-        }}
-      />
-    </Tooltip>
+    <ButtonIconSelect
+      label={t("labels.fill")}
+      options={[
+        {
+          value: "hachure",
+          text: t("labels.hachure"),
+          icon: <FillHachureIcon theme={appState.theme} />,
+        },
+        {
+          value: "cross-hatch",
+          text: t("labels.crossHatch"),
+          icon: <FillCrossHatchIcon theme={appState.theme} />,
+        },
+        {
+          value: "solid",
+          text: t("labels.solid"),
+          icon: <FillSolidIcon theme={appState.theme} />,
+        },
+      ]}
+      group="fill"
+      value={getFormValue(
+        elements,
+        appState,
+        (element) => element.fillStyle,
+        appState.currentItemFillStyle,
+      )}
+      onChange={(value) => {
+        updateData(value);
+      }}
+    />
   ),
 });
 
@@ -340,35 +362,34 @@ export const actionChangeStrokeWidth = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.strokeWidth")}>
-      <ButtonIconSelect
-        group="stroke-width"
-        options={[
-          {
-            value: 1,
-            text: t("labels.thin"),
-            icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={2} />,
-          },
-          {
-            value: 2,
-            text: t("labels.bold"),
-            icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={6} />,
-          },
-          {
-            value: 4,
-            text: t("labels.extraBold"),
-            icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={10} />,
-          },
-        ]}
-        value={getFormValue(
-          elements,
-          appState,
-          (element) => element.strokeWidth,
-          appState.currentItemStrokeWidth,
-        )}
-        onChange={(value) => updateData(value)}
-      />
-    </Tooltip>
+    <ButtonIconSelect
+      label={t("labels.strokeWidth")}
+      group="stroke-width"
+      options={[
+        {
+          value: 1,
+          text: t("labels.thin"),
+          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={2} />,
+        },
+        {
+          value: 2,
+          text: t("labels.bold"),
+          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={6} />,
+        },
+        {
+          value: 4,
+          text: t("labels.extraBold"),
+          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={10} />,
+        },
+      ]}
+      value={getFormValue(
+        elements,
+        appState,
+        (element) => element.strokeWidth,
+        appState.currentItemStrokeWidth,
+      )}
+      onChange={(value) => updateData(value)}
+    />
   ),
 });
 
@@ -387,35 +408,34 @@ export const actionChangeSloppiness = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.sloppiness")}>
-      <ButtonIconSelect
-        group="sloppiness"
-        options={[
-          {
-            value: 0,
-            text: t("labels.architect"),
-            icon: <SloppinessArchitectIcon theme={appState.theme} />,
-          },
-          {
-            value: 1,
-            text: t("labels.artist"),
-            icon: <SloppinessArtistIcon theme={appState.theme} />,
-          },
-          {
-            value: 2,
-            text: t("labels.cartoonist"),
-            icon: <SloppinessCartoonistIcon theme={appState.theme} />,
-          },
-        ]}
-        value={getFormValue(
-          elements,
-          appState,
-          (element) => element.roughness,
-          appState.currentItemRoughness,
-        )}
-        onChange={(value) => updateData(value)}
-      />
-    </Tooltip>
+    <ButtonIconSelect
+      label={t("labels.sloppiness")}
+      group="sloppiness"
+      options={[
+        {
+          value: 0,
+          text: t("labels.architect"),
+          icon: <SloppinessArchitectIcon theme={appState.theme} />,
+        },
+        {
+          value: 1,
+          text: t("labels.artist"),
+          icon: <SloppinessArtistIcon theme={appState.theme} />,
+        },
+        {
+          value: 2,
+          text: t("labels.cartoonist"),
+          icon: <SloppinessCartoonistIcon theme={appState.theme} />,
+        },
+      ]}
+      value={getFormValue(
+        elements,
+        appState,
+        (element) => element.roughness,
+        appState.currentItemRoughness,
+      )}
+      onChange={(value) => updateData(value)}
+    />
   ),
 });
 
@@ -433,35 +453,34 @@ export const actionChangeStrokeStyle = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.strokeStyle")}>
-      <ButtonIconSelect
-        group="strokeStyle"
-        options={[
-          {
-            value: "solid",
-            text: t("labels.strokeStyle_solid"),
-            icon: <StrokeStyleSolidIcon theme={appState.theme} />,
-          },
-          {
-            value: "dashed",
-            text: t("labels.strokeStyle_dashed"),
-            icon: <StrokeStyleDashedIcon theme={appState.theme} />,
-          },
-          {
-            value: "dotted",
-            text: t("labels.strokeStyle_dotted"),
-            icon: <StrokeStyleDottedIcon theme={appState.theme} />,
-          },
-        ]}
-        value={getFormValue(
-          elements,
-          appState,
-          (element) => element.strokeStyle,
-          appState.currentItemStrokeStyle,
-        )}
-        onChange={(value) => updateData(value)}
-      />
-    </Tooltip>
+    <ButtonIconSelect
+      label={t("labels.strokeStyle")}
+      group="strokeStyle"
+      options={[
+        {
+          value: "solid",
+          text: t("labels.strokeStyle_solid"),
+          icon: <StrokeStyleSolidIcon theme={appState.theme} />,
+        },
+        {
+          value: "dashed",
+          text: t("labels.strokeStyle_dashed"),
+          icon: <StrokeStyleDashedIcon theme={appState.theme} />,
+        },
+        {
+          value: "dotted",
+          text: t("labels.strokeStyle_dotted"),
+          icon: <StrokeStyleDottedIcon theme={appState.theme} />,
+        },
+      ]}
+      value={getFormValue(
+        elements,
+        appState,
+        (element) => element.strokeStyle,
+        appState.currentItemStrokeStyle,
+      )}
+      onChange={(value) => updateData(value)}
+    />
   ),
 });
 
@@ -479,68 +498,77 @@ export const actionChangeOpacity = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.opacity")}>
-      <Popover
-        content={
-          <Slider
-            step={10}
-            tipFormatter={(value) => `${value}%`}
-            value={
-              getFormValue(
-                elements,
-                appState,
-                (element) => element.opacity,
-                appState.currentItemOpacity,
-              ) ?? undefined
-            }
-            onChange={(value) => updateData(+value)}
-          />
-          // <label className="control-label">
-          //   <input
-          //     type="range"
-          //     min="0"
-          //     max="100"
-          //     step="10"
-          //     onChange={(event) => updateData(+event.target.value)}
-          //     onWheel={(event) => {
-          //       event.stopPropagation();
-          //       const target = event.target as HTMLInputElement;
-          //       const STEP = 10;
-          //       const MAX = 100;
-          //       const MIN = 0;
-          //       const value = +target.value;
-          //
-          //       if (event.deltaY < 0 && value < MAX) {
-          //         updateData(value + STEP);
-          //       } else if (event.deltaY > 0 && value > MIN) {
-          //         updateData(value - STEP);
-          //       }
-          //     }}
-          //     value={
-          //       getFormValue(
-          //         elements,
-          //         appState,
-          //         (element) => element.opacity,
-          //         appState.currentItemOpacity,
-          //       ) ?? undefined
-          //     }
-          //   />
-          // </label>
-        }
+    <Popover
+      placement="bottom"
+      content={
+        <Slider
+          step={10}
+          tipFormatter={(value) => `${value}%`}
+          value={
+            getFormValue(
+              elements,
+              appState,
+              (element) => element.opacity,
+              appState.currentItemOpacity,
+            ) ?? undefined
+          }
+          onChange={(value) => updateData(+value)}
+        />
+        // <label className="control-label">
+        //   <input
+        //     type="range"
+        //     min="0"
+        //     max="100"
+        //     step="10"
+        //     onChange={(event) => updateData(+event.target.value)}
+        //     onWheel={(event) => {
+        //       event.stopPropagation();
+        //       const target = event.target as HTMLInputElement;
+        //       const STEP = 10;
+        //       const MAX = 100;
+        //       const MIN = 0;
+        //       const value = +target.value;
+        //
+        //       if (event.deltaY < 0 && value < MAX) {
+        //         updateData(value + STEP);
+        //       } else if (event.deltaY > 0 && value > MIN) {
+        //         updateData(value - STEP);
+        //       }
+        //     }}
+        //     value={
+        //       getFormValue(
+        //         elements,
+        //         appState,
+        //         (element) => element.opacity,
+        //         appState.currentItemOpacity,
+        //       ) ?? undefined
+        //     }
+        //   />
+        // </label>
+      }
+      title={t("labels.opacity")}
+      trigger="click"
+    >
+      <Tooltip
         title={t("labels.opacity")}
-        trigger="click"
+        placement="right"
+        mouseEnterDelay={2}
       >
-        <Button type="text">
-          {getFormValue(
-            elements,
-            appState,
-            (element) => element.opacity,
-            appState.currentItemOpacity,
-          ) ?? undefined}
-          %
+        <Button
+          className="e-icon-button"
+          type="text"
+          icon={<OpacityIcon theme={appState.theme} />}
+        >
+          {/*{getFormValue(*/}
+          {/*  elements,*/}
+          {/*  appState,*/}
+          {/*  (element) => element.opacity,*/}
+          {/*  appState.currentItemOpacity,*/}
+          {/*) ?? undefined}*/}
+          {/*%*/}
         </Button>
-      </Popover>
-    </Tooltip>
+      </Tooltip>
+    </Popover>
   ),
 });
 
@@ -550,53 +578,52 @@ export const actionChangeFontSize = register({
     return changeFontSize(elements, appState, () => value, value);
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.fontSize")}>
-      <ButtonIconSelect
-        group="font-size"
-        options={[
-          {
-            value: 16,
-            text: t("labels.small"),
-            icon: <FontSizeSmallIcon theme={appState.theme} />,
-            testId: "fontSize-small",
-          },
-          {
-            value: 20,
-            text: t("labels.medium"),
-            icon: <FontSizeMediumIcon theme={appState.theme} />,
-            testId: "fontSize-medium",
-          },
-          {
-            value: 28,
-            text: t("labels.large"),
-            icon: <FontSizeLargeIcon theme={appState.theme} />,
-            testId: "fontSize-large",
-          },
-          {
-            value: 36,
-            text: t("labels.veryLarge"),
-            icon: <FontSizeExtraLargeIcon theme={appState.theme} />,
-            testId: "fontSize-veryLarge",
-          },
-        ]}
-        value={getFormValue(
-          elements,
-          appState,
-          (element) => {
-            if (isTextElement(element)) {
-              return element.fontSize;
-            }
-            const boundTextElement = getBoundTextElement(element);
-            if (boundTextElement) {
-              return boundTextElement.fontSize;
-            }
-            return null;
-          },
-          appState.currentItemFontSize || DEFAULT_FONT_SIZE,
-        )}
-        onChange={(value) => updateData(value)}
-      />
-    </Tooltip>
+    <ButtonIconSelect
+      label={t("labels.fontSize")}
+      group="font-size"
+      options={[
+        {
+          value: 16,
+          text: t("labels.small"),
+          icon: <FontSizeSmallIcon theme={appState.theme} />,
+          testId: "fontSize-small",
+        },
+        {
+          value: 20,
+          text: t("labels.medium"),
+          icon: <FontSizeMediumIcon theme={appState.theme} />,
+          testId: "fontSize-medium",
+        },
+        {
+          value: 28,
+          text: t("labels.large"),
+          icon: <FontSizeLargeIcon theme={appState.theme} />,
+          testId: "fontSize-large",
+        },
+        {
+          value: 36,
+          text: t("labels.veryLarge"),
+          icon: <FontSizeExtraLargeIcon theme={appState.theme} />,
+          testId: "fontSize-veryLarge",
+        },
+      ]}
+      value={getFormValue(
+        elements,
+        appState,
+        (element) => {
+          if (isTextElement(element)) {
+            return element.fontSize;
+          }
+          const boundTextElement = getBoundTextElement(element);
+          if (boundTextElement) {
+            return boundTextElement.fontSize;
+          }
+          return null;
+        },
+        appState.currentItemFontSize || DEFAULT_FONT_SIZE,
+      )}
+      onChange={(value) => updateData(value)}
+    />
   ),
 });
 
@@ -696,28 +723,27 @@ export const actionChangeFontFamily = register({
     ];
 
     return (
-      <Tooltip label={t("labels.fontFamily")}>
-        <ButtonIconSelect<FontFamilyValues | false>
-          group="font-family"
-          options={options}
-          value={getFormValue(
-            elements,
-            appState,
-            (element) => {
-              if (isTextElement(element)) {
-                return element.fontFamily;
-              }
-              const boundTextElement = getBoundTextElement(element);
-              if (boundTextElement) {
-                return boundTextElement.fontFamily;
-              }
-              return null;
-            },
-            appState.currentItemFontFamily || DEFAULT_FONT_FAMILY,
-          )}
-          onChange={(value) => updateData(value)}
-        />
-      </Tooltip>
+      <ButtonIconSelect<FontFamilyValues | false>
+        label={t("labels.fontFamily")}
+        group="font-family"
+        options={options}
+        value={getFormValue(
+          elements,
+          appState,
+          (element) => {
+            if (isTextElement(element)) {
+              return element.fontFamily;
+            }
+            const boundTextElement = getBoundTextElement(element);
+            if (boundTextElement) {
+              return boundTextElement.fontFamily;
+            }
+            return null;
+          },
+          appState.currentItemFontFamily || DEFAULT_FONT_FAMILY,
+        )}
+        onChange={(value) => updateData(value)}
+      />
     );
   },
 });
@@ -757,44 +783,43 @@ export const actionChangeTextAlign = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.textAlign")}>
-      <ButtonIconSelect<TextAlign | false>
-        group="text-align"
-        options={[
-          {
-            value: "left",
-            text: t("labels.left"),
-            icon: <TextAlignLeftIcon theme={appState.theme} />,
-          },
-          {
-            value: "center",
-            text: t("labels.center"),
-            icon: <TextAlignCenterIcon theme={appState.theme} />,
-          },
-          {
-            value: "right",
-            text: t("labels.right"),
-            icon: <TextAlignRightIcon theme={appState.theme} />,
-          },
-        ]}
-        value={getFormValue(
-          elements,
-          appState,
-          (element) => {
-            if (isTextElement(element)) {
-              return element.textAlign;
-            }
-            const boundTextElement = getBoundTextElement(element);
-            if (boundTextElement) {
-              return boundTextElement.textAlign;
-            }
-            return null;
-          },
-          appState.currentItemTextAlign,
-        )}
-        onChange={(value) => updateData(value)}
-      />
-    </Tooltip>
+    <ButtonIconSelect<TextAlign | false>
+      label={t("labels.textAlign")}
+      group="text-align"
+      options={[
+        {
+          value: "left",
+          text: t("labels.left"),
+          icon: <TextAlignLeftIcon theme={appState.theme} />,
+        },
+        {
+          value: "center",
+          text: t("labels.center"),
+          icon: <TextAlignCenterIcon theme={appState.theme} />,
+        },
+        {
+          value: "right",
+          text: t("labels.right"),
+          icon: <TextAlignRightIcon theme={appState.theme} />,
+        },
+      ]}
+      value={getFormValue(
+        elements,
+        appState,
+        (element) => {
+          if (isTextElement(element)) {
+            return element.textAlign;
+          }
+          const boundTextElement = getBoundTextElement(element);
+          if (boundTextElement) {
+            return boundTextElement.textAlign;
+          }
+          return null;
+        },
+        appState.currentItemTextAlign,
+      )}
+      onChange={(value) => updateData(value)}
+    />
   ),
 });
 
@@ -830,34 +855,33 @@ export const actionChangeSharpness = register({
     };
   },
   PanelComponent: ({ elements, appState, updateData }) => (
-    <Tooltip label={t("labels.edges")}>
-      <ButtonIconSelect
-        group="edges"
-        options={[
-          {
-            value: "sharp",
-            text: t("labels.sharp"),
-            icon: <EdgeSharpIcon theme={appState.theme} />,
-          },
-          {
-            value: "round",
-            text: t("labels.round"),
-            icon: <EdgeRoundIcon theme={appState.theme} />,
-          },
-        ]}
-        value={getFormValue(
-          elements,
-          appState,
-          (element) => element.strokeSharpness,
-          (canChangeSharpness(appState.elementType) &&
-            (isLinearElementType(appState.elementType)
-              ? appState.currentItemLinearStrokeSharpness
-              : appState.currentItemStrokeSharpness)) ||
-            null,
-        )}
-        onChange={(value) => updateData(value)}
-      />
-    </Tooltip>
+    <ButtonIconSelect
+      label={t("labels.edges")}
+      group="edges"
+      options={[
+        {
+          value: "sharp",
+          text: t("labels.sharp"),
+          icon: <EdgeSharpIcon theme={appState.theme} />,
+        },
+        {
+          value: "round",
+          text: t("labels.round"),
+          icon: <EdgeRoundIcon theme={appState.theme} />,
+        },
+      ]}
+      value={getFormValue(
+        elements,
+        appState,
+        (element) => element.strokeSharpness,
+        (canChangeSharpness(appState.elementType) &&
+          (isLinearElementType(appState.elementType)
+            ? appState.currentItemLinearStrokeSharpness
+            : appState.currentItemStrokeSharpness)) ||
+          null,
+      )}
+      onChange={(value) => updateData(value)}
+    />
   ),
 });
 
@@ -901,9 +925,10 @@ export const actionChangeArrowhead = register({
     const isRTL = getLanguage().rtl;
 
     return (
-      <Tooltip label={t("labels.arrowheads")}>
+      // <Tooltip title={t("labels.arrowheads")}>
+      <>
         <IconPicker
-          label="arrowhead_start"
+          label={t("labels.arrowheads")}
           options={[
             {
               value: null,
@@ -950,7 +975,7 @@ export const actionChangeArrowhead = register({
           onChange={(value) => updateData({ position: "start", type: value })}
         />
         <IconPicker
-          label="arrowhead_end"
+          label={t("labels.arrowheads")}
           group="arrowheads"
           options={[
             {
@@ -997,7 +1022,8 @@ export const actionChangeArrowhead = register({
           )}
           onChange={(value) => updateData({ position: "end", type: value })}
         />
-      </Tooltip>
+      </>
+      // </Tooltip>
     );
   },
 });

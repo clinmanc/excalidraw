@@ -20,7 +20,8 @@ import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { hasStrokeColor } from "../scene/comparisons";
 
-import { Row, Col, Button, Divider, Popover } from "antd";
+import { Row, Col, Button, Divider, Popover, Tooltip } from "antd";
+import { AlignIcon, LayersIcon } from "./icons";
 
 export const SelectedShapeActions = ({
   appState,
@@ -137,9 +138,20 @@ export const SelectedShapeActions = ({
           </Row>
         }
         title={t("labels.layers")}
+        placement="bottom"
         trigger="click"
       >
-        <Button type="text">{t("labels.layers")}</Button>
+        <Tooltip
+          title={t("labels.layers")}
+          placement="right"
+          mouseEnterDelay={2}
+        >
+          <Button
+            className="e-icon-button"
+            type="text"
+            icon={<LayersIcon theme={appState.theme} />}
+          />
+        </Tooltip>
       </Popover>
 
       <Divider type="vertical" />
@@ -185,9 +197,20 @@ export const SelectedShapeActions = ({
               </Row>
             }
             title={t("labels.align")}
+            placement="bottom"
             trigger="click"
           >
-            <Button type="text">{t("labels.align")}</Button>
+            <Tooltip
+              title={t("labels.align")}
+              placement="right"
+              mouseEnterDelay={2}
+            >
+              <Button
+                className="e-icon-button"
+                type="text"
+                icon={<AlignIcon theme={appState.theme} />}
+              />
+            </Tooltip>
           </Popover>
 
           <Divider type="vertical" />

@@ -5,7 +5,9 @@ import clsx from "clsx";
 import { useExcalidrawContainer } from "./App";
 import { AbortError } from "../errors";
 import { PointerType } from "../element/types";
-import { Button } from "antd";
+import { t } from "../i18n";
+
+import { Button, Tooltip } from "antd";
 
 export type ToolButtonSize = "small" | "medium";
 
@@ -99,20 +101,25 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
     //   | "button"
     //   | "submit";
     return (
-      <Button
-        className="zIndexButton"
-        icon={props.icon}
-        type="text"
-        data-testid={props["data-testid"]}
-        aria-label={props.label}
-        // showAriaLabel={useIsMobile()}
+      <Tooltip
         title={props.title}
-        ref={innerRef}
-        disabled={isLoading || props.isLoading}
-        onClick={onClick}
+        placement="right"
+        mouseEnterDelay={2}
       >
-        {props.children}
-      </Button>
+        <Button
+          className="zIndexButton e-icon-button"
+          icon={props.icon}
+          type="text"
+          data-testid={props["data-testid"]}
+          aria-label={props.label}
+          // showAriaLabel={useIsMobile()}
+          ref={innerRef}
+          disabled={isLoading || props.isLoading}
+          onClick={onClick}
+        >
+          {props.children}
+        </Button>
+      </Tooltip>
 
       // <button
       //   className={clsx(

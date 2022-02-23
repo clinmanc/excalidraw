@@ -65,7 +65,13 @@ export const MobileMenu = ({
 }: MobileMenuProps) => {
   const renderToolbar = () => {
     return (
-      <Card title="基础图形" style={{ width: 120 }} size="small">
+      <Card
+        className="e-card"
+        title="基础图形"
+        size="small"
+        bordered={false}
+        style={{ width: 120 }}
+      >
         <Section heading="shapes">
           {(heading) => (
             // {heading}

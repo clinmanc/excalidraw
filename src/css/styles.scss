@@ -2,17 +2,70 @@
 @import "./theme";
 @import "~antd/dist/antd.css";
 
-.menu_top {
+.e-menu__top {
   position: absolute;
-  left: 0;
-  top: 0px;
-  width: 100vw;
+  left: 8px;
+  top: 8px;
+  right: 8px;
 }
 
-.menu_left {
+.e-menu__left {
   position: absolute;
-  left: 0;
-  top: 100px;
+  left: 8px;
+  top: 56px;
+}
+
+.e-icon-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.e-icon-select {
+  width: 32px;
+
+  .ant-select-selector {
+    padding: 0 !important;
+  }
+  .ant-select-selection-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.e-icon-option {
+  &.ant-select-item {
+    padding: 0 !important;
+  }
+  .ant-select-item-option-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.e-card {
+  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 8%);
 }
 
 :root {

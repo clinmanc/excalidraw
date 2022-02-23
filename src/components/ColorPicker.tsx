@@ -7,6 +7,9 @@ import { isArrowKey, KEYS } from "../keys";
 import { t, getLanguage } from "../i18n";
 import { isWritableElement } from "../utils";
 import colors from "../colors";
+import { BorderColorIcon, OpacityIcon } from "./icons";
+
+import { Button } from "antd";
 
 const isValidColor = (color: string) => {
   const style = new Option().style;
@@ -243,6 +246,7 @@ export const ColorPicker = ({
   type,
   color,
   onChange,
+  icon,
   label,
   isActive,
   setActive,
@@ -250,6 +254,7 @@ export const ColorPicker = ({
   type: "canvasBackground" | "elementBackground" | "elementStroke";
   color: string | null;
   onChange: (color: string) => void;
+  icon: JSX.Element,
   label: string;
   isActive: boolean;
   setActive: (active: boolean) => void;
@@ -259,13 +264,19 @@ export const ColorPicker = ({
   return (
     <div>
       <div className="color-picker-control-container">
-        <button
-          className="color-picker-label-swatch"
-          aria-label={label}
-          style={color ? { "--swatch-color": color } : undefined}
+        <Button
+          type="text"
+          icon={icon}
+          title={label}
           onClick={() => setActive(!isActive)}
-          ref={pickerButton}
         />
+        {/*<button*/}
+        {/*  className="color-picker-label-swatch"*/}
+        {/*  aria-label={label}*/}
+        {/*  style={color ? { "--swatch-color": color } : undefined}*/}
+        {/*  onClick={() => setActive(!isActive)}*/}
+        {/*  ref={pickerButton}*/}
+        {/*/>*/}
         {/*<ColorInput*/}
         {/*  color={color}*/}
         {/*  label={label}*/}
@@ -277,9 +288,9 @@ export const ColorPicker = ({
       <React.Suspense fallback="">
         {isActive ? (
           <Popover
-            onCloseRequest={(event) =>
-              event.target !== pickerButton.current && setActive(false)
-            }
+          // onCloseRequest={(event) =>
+          //   event.target !== pickerButton.current && setActive(false)
+          // }
           >
             <Picker
               colors={colors[type]}
