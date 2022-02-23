@@ -1,4 +1,4 @@
-import fallbackLangData from "./locales/en.json";
+import fallbackLangData from "./locales/zh-CN.json";
 import percentages from "./locales/percentages.json";
 import { ENV } from "./constants";
 
@@ -20,6 +20,7 @@ const allLanguages: Language[] = [
   { code: "de-DE", label: "Deutsch" },
   { code: "el-GR", label: "Ελληνικά" },
   { code: "es-ES", label: "Español" },
+  { code: "en", label: "English" },
   { code: "eu-ES", label: "Euskara" },
   { code: "fa-IR", label: "فارسی", rtl: true },
   { code: "fi-FI", label: "Suomi" },
@@ -50,9 +51,8 @@ const allLanguages: Language[] = [
   { code: "sv-SE", label: "Svenska" },
   { code: "tr-TR", label: "Türkçe" },
   { code: "uk-UA", label: "Українська" },
-  { code: "zh-CN", label: "简体中文" },
   { code: "zh-TW", label: "繁體中文" },
-];
+].concat([defaultLang]);
 
 export const languages: Language[] = allLanguages
   .sort((left, right) => (left.label > right.label ? 1 : -1))
