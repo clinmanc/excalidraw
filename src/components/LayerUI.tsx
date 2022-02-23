@@ -36,7 +36,7 @@ import "./LayerUI.scss";
 import "./Toolbar.scss";
 import { PenModeButton } from "./PenModeButton";
 
-import { Button, Card } from "antd";
+import { Button, Card, Tooltip } from "antd";
 import { HighlightOutlined } from "@ant-design/icons";
 
 interface LayerUIProps {
@@ -324,12 +324,17 @@ const LayerUI = ({
             {/*  </UserList>*/}
             {/*  {renderTopRightUI?.(isMobile, appState)}*/}
             {/*</div>*/}
-            <Button
-              type={sketchModeEnabled ? "primary" : "text"}
-              icon={<HighlightOutlined />}
+            <Tooltip
               title="草图模式"
-              onClick={toggleSketchMode}
-            />
+              placement="right"
+              mouseEnterDelay={2}
+            >
+              <Button
+                type={sketchModeEnabled ? "primary" : "text"}
+                icon={<HighlightOutlined />}
+                onClick={toggleSketchMode}
+              />
+            </Tooltip>
           </Stack.Row>
           <HintViewer
             appState={appState}

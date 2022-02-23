@@ -7,9 +7,8 @@ import { isArrowKey, KEYS } from "../keys";
 import { t, getLanguage } from "../i18n";
 import { isWritableElement } from "../utils";
 import colors from "../colors";
-import { BorderColorIcon, OpacityIcon } from "./icons";
 
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 
 const isValidColor = (color: string) => {
   const style = new Option().style;
@@ -254,7 +253,7 @@ export const ColorPicker = ({
   type: "canvasBackground" | "elementBackground" | "elementStroke";
   color: string | null;
   onChange: (color: string) => void;
-  icon: JSX.Element,
+  icon: JSX.Element;
   label: string;
   isActive: boolean;
   setActive: (active: boolean) => void;
@@ -264,12 +263,13 @@ export const ColorPicker = ({
   return (
     <div>
       <div className="color-picker-control-container">
-        <Button
-          type="text"
-          icon={icon}
-          title={label}
-          onClick={() => setActive(!isActive)}
-        />
+        <Tooltip title={label} placement="right" mouseEnterDelay={2}>
+          <Button
+            type="text"
+            icon={icon}
+            onClick={() => setActive(!isActive)}
+          />
+        </Tooltip>
         {/*<button*/}
         {/*  className="color-picker-label-swatch"*/}
         {/*  aria-label={label}*/}
