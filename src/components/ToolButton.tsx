@@ -103,7 +103,7 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
     return (
       <Tooltip title={props.title} placement="right" mouseEnterDelay={2}>
         <Button
-          className="zIndexButton e-icon-button"
+          className="e-icon-button"
           icon={props.icon}
           type="text"
           data-testid={props["data-testid"]}

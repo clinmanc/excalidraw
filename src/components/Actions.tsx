@@ -248,7 +248,7 @@ export const ShapesSwitcher = ({
         ? `${capitalizeString(letter)} ${t("helpDialog.or")} ${index + 1}`
         : `${index + 1}`;
       return (
-        <Col className="gutter-row" span={12} key={value}>
+        <Col className="gutter-row" key={value} xs={24} sm={12}>
           {/*<Button*/}
           {/*  type={elementType === value ? "primary" : "text"}*/}
           {/*  icon={<div className="ToolIcon__icon">{icon}</div>}*/}
