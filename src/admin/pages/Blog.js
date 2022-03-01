@@ -18,7 +18,7 @@ import POSTS from "../_mocks_/blog";
 
 export default function Blog() {
   return (
-    <Page title="Dashboard: Blog | Minimal-UI">
+    <Page title="Dashboard: Blog">
       <Container>
         {/*<Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">*/}
         {/*  <BlogPostsSearch posts={POSTS} />*/}
