@@ -41,7 +41,7 @@ const ContentStyle = styled("div")(({ theme }) => ({
 
 export default function Login() {
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title="Login">
       <AuthLayout>
         没有账户? &nbsp;
         <Link
@@ -76,15 +76,8 @@ export default function Login() {
 
           <LoginForm />
 
-          <MHidden width="smUp">
-            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              没有账户?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to="register">
-                前去注册
-              </Link>
-            </Typography>
-          </MHidden>
         </ContentStyle>
+        <Link href={"https://beian.miit.gov.cn"}>浙ICP备19040008号</Link>
       </Container>
     </RootStyle>
   );

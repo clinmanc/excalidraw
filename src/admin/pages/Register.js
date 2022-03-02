@@ -41,7 +41,7 @@ const ContentStyle = styled("div")(({ theme }) => ({
 
 export default function Register() {
   return (
-    <RootStyle title="Register | Minimal-UI">
+    <RootStyle title="Register">
       <AuthLayout>
         已经有账号? &nbsp;
         <Link
