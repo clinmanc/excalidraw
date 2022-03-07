@@ -77,6 +77,7 @@ export {
 } from "./actionClipboard";
 
 export { actionToggleGridMode } from "./actionToggleGridMode";
+export { actionToggleSketchMode } from "./actionToggleSketchMode";
 export { actionToggleZenMode } from "./actionToggleZenMode";
 
 export { actionToggleStats } from "./actionToggleStats";

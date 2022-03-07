@@ -74,9 +74,8 @@ export const SelectedShapeActions = ({
 
       <Divider type="vertical" />
 
-      {sketchModeEnabled &&
-        (hasStrokeWidth(elementType) ||
-          targetElements.some((element) => hasStrokeWidth(element.type))) &&
+      {(hasStrokeWidth(elementType) ||
+        targetElements.some((element) => hasStrokeWidth(element.type))) &&
         renderAction("changeStrokeWidth")}
 
       {sketchModeEnabled &&
@@ -84,13 +83,15 @@ export const SelectedShapeActions = ({
           targetElements.some((element) => element.type === "freedraw")) &&
         renderAction("changeStrokeShape")}
 
+      {(hasStrokeStyle(elementType) ||
+        targetElements.some((element) => hasStrokeStyle(element.type))) && (
+        <>{renderAction("changeStrokeStyle")}</>
+      )}
+
       {sketchModeEnabled &&
         (hasStrokeStyle(elementType) ||
           targetElements.some((element) => hasStrokeStyle(element.type))) && (
-          <>
-            {renderAction("changeStrokeStyle")}
-            {renderAction("changeSloppiness")}
-          </>
+          <>{renderAction("changeSloppiness")}</>
         )}
 
       {sketchModeEnabled &&
