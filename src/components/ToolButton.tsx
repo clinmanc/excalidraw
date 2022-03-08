@@ -101,7 +101,7 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
     //   | "button"
     //   | "submit";
     return (
-      <Tooltip title={props.title} placement="right" mouseEnterDelay={2}>
+      <Tooltip title={props.title} placement="right" mouseEnterDelay={1}>
         <Button
           className="e-icon-button"
           icon={props.icon}
@@ -162,7 +162,7 @@ export const ToolButton = React.forwardRef((props: ToolButtonProps, ref) => {
   }
 
   return (
-    <Tooltip title={props.title} placement="right" mouseEnterDelay={2}>
+    <Tooltip title={props.title} placement="right" mouseEnterDelay={1}>
       <label
         className={clsx("ToolIcon", props.className)}
         onPointerDown={(event) => {

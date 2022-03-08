@@ -285,7 +285,7 @@ export const ColorPicker = ({
           title={label}
           trigger="click"
         >
-          <Tooltip title={label} placement="right" mouseEnterDelay={2}>
+          <Tooltip title={label} placement="right" mouseEnterDelay={1}>
             <Button
               type="text"
               icon={icon}

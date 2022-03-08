@@ -152,7 +152,7 @@ export function IconPicker<T>({
   // const isRTL = getLanguage().rtl;
 
   return (
-    <Tooltip title={label} placement="right" mouseEnterDelay={2}>
+    <Tooltip title={label} placement="right" mouseEnterDelay={1}>
       <Select
         className="e-icon-select"
         showArrow={false}

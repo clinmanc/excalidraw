@@ -145,7 +145,7 @@ export const SelectedShapeActions = ({
         <Tooltip
           title={t("labels.layers")}
           placement="right"
-          mouseEnterDelay={2}
+          mouseEnterDelay={1}
         >
           <Button
             className="e-icon-button"
@@ -204,7 +204,7 @@ export const SelectedShapeActions = ({
             <Tooltip
               title={t("labels.align")}
               placement="right"
-              mouseEnterDelay={2}
+              mouseEnterDelay={1}
             >
               <Button
                 className="e-icon-button"
