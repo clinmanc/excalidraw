@@ -5,6 +5,8 @@ import { useFormik, Form, FormikProvider } from "formik";
 import eyeFill from "@iconify/icons-eva/eye-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
@@ -21,7 +23,8 @@ export default function RegisterForm() {
     //   .max(50, 'Too Long!')
     //   .required('First name required'),
     // lastName: Yup.string().min(2, '密码长度太短').max(50, '密码长度太长').required('Last name required'),
-    phone: Yup.string().required("手机号为空"),
+    phone: Yup.string().length(11, '手机号格式不对').required("手机号为空"),
+    verification: Yup.string().length(6, '验证码格式不对').required("验证码为空"),
     password: Yup.string().required("密码为空"),
   });
 
@@ -30,6 +33,7 @@ export default function RegisterForm() {
       firstName: "",
       lastName: "",
       phone: "",
+      verification:"",
       password: "",
     },
     validationSchema: RegisterSchema,
@@ -71,6 +75,21 @@ export default function RegisterForm() {
             error={Boolean(touched.phone && errors.phone)}
             helperText={touched.phone && errors.phone}
           />
+
+          <Stack direction="row">
+            <TextField
+              autoComplete="verification"
+              type="verification"
+              sx={{ m: 1, width: '70%', }}
+              label="验证码"
+              {...getFieldProps("verification")}
+              error={Boolean(touched.verification && errors.verification)}
+              helperText={touched.verification && errors.verification}
+            />
+            <Button variant="contained" sx={{ m: 1, width: '30%', height: '55px' }}>
+              发送验证码
+            </Button>
+          </Stack>
 
           <TextField
             fullWidth
