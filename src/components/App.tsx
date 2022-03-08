@@ -24,6 +24,7 @@ import {
   actionSendBackward,
   actionSendToBack,
   actionToggleGridMode,
+  actionToggleSketchMode,
   actionToggleStats,
   actionToggleZenMode,
   actionUnbindText,
@@ -1552,11 +1553,7 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   toggleSketchMode = () => {
-    this.setState((prevState) => {
-      return {
-        sketchModeEnabled: !prevState.sketchModeEnabled,
-      };
-    });
+    this.actionManager.executeAction(actionToggleSketchMode);
   };
 
   togglePenMode = () => {

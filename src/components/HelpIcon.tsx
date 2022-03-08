@@ -9,7 +9,7 @@ type HelpIconProps = {
 };
 
 export const HelpIcon = (props: HelpIconProps) => (
-  <Tooltip title={`${props.title} — ?`} placement="right" mouseEnterDelay={2}>
+  <Tooltip title={`${props.title} — ?`} placement="right" mouseEnterDelay={1}>
     <Button
       className="e-icon-button"
       icon={<QuestionOutlined />}

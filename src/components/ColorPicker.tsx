@@ -1,5 +1,4 @@
 import React from "react";
-import { Popover } from "./Popover";
 import { isTransparent } from "../utils";
 
 import "./ColorPicker.scss";
@@ -8,7 +7,7 @@ import { t, getLanguage } from "../i18n";
 import { isWritableElement } from "../utils";
 import colors from "../colors";
 
-import { Button, Tooltip } from "antd";
+import { Button, Popover, Tooltip } from "antd";
 
 const isValidColor = (color: string) => {
   const style = new Option().style;
@@ -263,13 +262,37 @@ export const ColorPicker = ({
   return (
     <div>
       <div className="color-picker-control-container">
-        <Tooltip title={label} placement="right" mouseEnterDelay={2}>
-          <Button
-            type="text"
-            icon={icon}
-            onClick={() => setActive(!isActive)}
-          />
-        </Tooltip>
+        <Popover
+          placement="bottom"
+          content={
+            <div className="excalidraw" style={{ width: 188, height: 122 }}>
+              <Picker
+                colors={colors[type]}
+                color={color || null}
+                onChange={(changedColor) => {
+                  onChange(changedColor);
+                }}
+                onClose={() => {
+                  setActive(false);
+                  pickerButton.current?.focus();
+                }}
+                label={label}
+                showInput={false}
+                type={type}
+              />
+            </div>
+          }
+          title={label}
+          trigger="click"
+        >
+          <Tooltip title={label} placement="right" mouseEnterDelay={1}>
+            <Button
+              type="text"
+              icon={icon}
+              onClick={() => setActive(!isActive)}
+            />
+          </Tooltip>
+        </Popover>
         {/*<button*/}
         {/*  className="color-picker-label-swatch"*/}
         {/*  aria-label={label}*/}
@@ -285,30 +308,30 @@ export const ColorPicker = ({
         {/*  }}*/}
         {/*/>*/}
       </div>
-      <React.Suspense fallback="">
-        {isActive ? (
-          <Popover
-          // onCloseRequest={(event) =>
-          //   event.target !== pickerButton.current && setActive(false)
-          // }
-          >
-            <Picker
-              colors={colors[type]}
-              color={color || null}
-              onChange={(changedColor) => {
-                onChange(changedColor);
-              }}
-              onClose={() => {
-                setActive(false);
-                pickerButton.current?.focus();
-              }}
-              label={label}
-              showInput={false}
-              type={type}
-            />
-          </Popover>
-        ) : null}
-      </React.Suspense>
+      {/*<React.Suspense fallback="">*/}
+      {/*  {isActive ? (*/}
+      {/*    <Popover*/}
+      {/*    // onCloseRequest={(event) =>*/}
+      {/*    //   event.target !== pickerButton.current && setActive(false)*/}
+      {/*    // }*/}
+      {/*    >*/}
+      {/*      <Picker*/}
+      {/*        colors={colors[type]}*/}
+      {/*        color={color || null}*/}
+      {/*        onChange={(changedColor) => {*/}
+      {/*          onChange(changedColor);*/}
+      {/*        }}*/}
+      {/*        onClose={() => {*/}
+      {/*          setActive(false);*/}
+      {/*          pickerButton.current?.focus();*/}
+      {/*        }}*/}
+      {/*        label={label}*/}
+      {/*        showInput={false}*/}
+      {/*        type={type}*/}
+      {/*      />*/}
+      {/*    </Popover>*/}
+      {/*  ) : null}*/}
+      {/*</React.Suspense>*/}
     </div>
   );
 };

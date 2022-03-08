@@ -47,6 +47,7 @@ export type ActionName =
   | "selectAll"
   | "pasteStyles"
   | "gridMode"
+  | "sketchMode"
   | "zenMode"
   | "stats"
   | "changeStrokeColor"

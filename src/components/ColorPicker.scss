@@ -3,9 +3,6 @@
 .excalidraw {
   .color-picker {
     background: var(--popup-bg-color);
-    border: 0 solid transparentize($oc-white, 0.75);
-    box-shadow: transparentize($oc-black, 0.75) 0 1px 4px;
-    border-radius: 4px;
     position: absolute;
 
     :root[dir="ltr"] & {

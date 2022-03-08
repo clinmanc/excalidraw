@@ -324,11 +324,7 @@ const LayerUI = ({
             {/*  </UserList>*/}
             {/*  {renderTopRightUI?.(isMobile, appState)}*/}
             {/*</div>*/}
-            <Tooltip
-              title="草图模式"
-              placement="right"
-              mouseEnterDelay={2}
-            >
+            <Tooltip title="草图模式" placement="right" mouseEnterDelay={1}>
               <Button
                 type={sketchModeEnabled ? "primary" : "text"}
                 icon={<HighlightOutlined />}

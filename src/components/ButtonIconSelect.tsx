@@ -17,7 +17,7 @@ export const ButtonIconSelect = <T extends Object>({
   onChange: (value: T) => void;
   group: string;
 }) => (
-  <Tooltip title={label} placement="right" mouseEnterDelay={2}>
+  <Tooltip title={label} placement="right" mouseEnterDelay={1}>
     <Select
       className="e-icon-select"
       showArrow={false}

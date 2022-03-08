@@ -174,16 +174,16 @@
   }
 
   // shrink shape icons on small viewports to make them fit
-  @media (max-width: 425px) {
-    .Shape .ToolIcon__icon {
-      width: 2rem;
-      height: 2rem;
-
-      svg {
-        height: 0.8em;
-      }
-    }
-  }
+  //@media (max-width: 425px) {
+  //  .Shape .ToolIcon__icon {
+  //    width: 2rem;
+  //    height: 2rem;
+  //
+  //    svg {
+  //      height: 0.8em;
+  //    }
+  //  }
+  //}
 
   // move the lock button out of the way on small viewports
   // it begins to collide with the GitHub icon before we switch to mobile mode

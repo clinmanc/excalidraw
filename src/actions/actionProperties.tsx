@@ -552,7 +552,7 @@ export const actionChangeOpacity = register({
       <Tooltip
         title={t("labels.opacity")}
         placement="right"
-        mouseEnterDelay={2}
+        mouseEnterDelay={1}
       >
         <Button
           className="e-icon-button"

@@ -74,9 +74,8 @@ export const SelectedShapeActions = ({
 
       <Divider type="vertical" />
 
-      {sketchModeEnabled &&
-        (hasStrokeWidth(elementType) ||
-          targetElements.some((element) => hasStrokeWidth(element.type))) &&
+      {(hasStrokeWidth(elementType) ||
+        targetElements.some((element) => hasStrokeWidth(element.type))) &&
         renderAction("changeStrokeWidth")}
 
       {sketchModeEnabled &&
@@ -84,13 +83,15 @@ export const SelectedShapeActions = ({
           targetElements.some((element) => element.type === "freedraw")) &&
         renderAction("changeStrokeShape")}
 
+      {(hasStrokeStyle(elementType) ||
+        targetElements.some((element) => hasStrokeStyle(element.type))) && (
+        <>{renderAction("changeStrokeStyle")}</>
+      )}
+
       {sketchModeEnabled &&
         (hasStrokeStyle(elementType) ||
           targetElements.some((element) => hasStrokeStyle(element.type))) && (
-          <>
-            {renderAction("changeStrokeStyle")}
-            {renderAction("changeSloppiness")}
-          </>
+          <>{renderAction("changeSloppiness")}</>
         )}
 
       {sketchModeEnabled &&
@@ -144,7 +145,7 @@ export const SelectedShapeActions = ({
         <Tooltip
           title={t("labels.layers")}
           placement="right"
-          mouseEnterDelay={2}
+          mouseEnterDelay={1}
         >
           <Button
             className="e-icon-button"
@@ -203,7 +204,7 @@ export const SelectedShapeActions = ({
             <Tooltip
               title={t("labels.align")}
               placement="right"
-              mouseEnterDelay={2}
+              mouseEnterDelay={1}
             >
               <Button
                 className="e-icon-button"
@@ -248,7 +249,7 @@ export const ShapesSwitcher = ({
         ? `${capitalizeString(letter)} ${t("helpDialog.or")} ${index + 1}`
         : `${index + 1}`;
       return (
-        <Col className="gutter-row" span={12} key={value}>
+        <Col className="gutter-row" key={value} xs={24} sm={12}>
           {/*<Button*/}
           {/*  type={elementType === value ? "primary" : "text"}*/}
           {/*  icon={<div className="ToolIcon__icon">{icon}</div>}*/}

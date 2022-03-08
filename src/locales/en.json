@@ -142,6 +142,7 @@
     "fullScreen": "Full screen",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
+    "sketchMode": "Sketch mode",
     "zenMode": "Zen mode",
     "exitZenMode": "Exit zen mode",
     "cancel": "Cancel",
