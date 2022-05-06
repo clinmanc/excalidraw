@@ -179,6 +179,10 @@ export const oftenFetchByPost = (api, options) => {
             message.warning("请求参数错误");
             failure && failure(response);
             break }
+          case 40001: {
+            message.error(response.msg);
+            failure && failure(response);
+            break }
           case 500: {
             // message.warning(response.msg)
             // failure && failure(response)

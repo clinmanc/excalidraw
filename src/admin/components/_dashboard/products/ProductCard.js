@@ -24,8 +24,9 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { name, status } = product;
+  const { author, thumbnail, status } = product;
 
+  console.log("ShopProductCard", product);
   return (
     <Card>
       <Box sx={{ pt: "100%", position: "relative" }}>
@@ -45,10 +46,8 @@ export default function ShopProductCard({ product }) {
           </Label>
         )}
         <ProductImgStyle
-          alt={name}
-          src={
-            "https://static-cdn.mindnow.cn/kq-tpl/5528941f4c6576a738c35b165355823b/thumb.png"
-          }
+          alt={author}
+          src={thumbnail}
         />
       </Box>
 

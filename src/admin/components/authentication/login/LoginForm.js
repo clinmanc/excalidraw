@@ -8,6 +8,7 @@ import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
 // material
 import {IconButton, InputAdornment, Link, Stack, TextField,} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
+import {userLogin, userRegister} from "../../../api/manage";
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +29,16 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      navigate("/dashboard", { replace: true });
+      userLogin({
+        Phone: getFieldProps("phone").value,
+        Password: getFieldProps("password").value,
+      }, (res) => {
+        console.log("userLogin", res)
+        sessionStorage.setItem("username", res.data.username)
+        navigate("/dashboard", { replace: true });
+      }, (err) => {
+        console.log("userLogin", err)
+      })
     },
   });
 
@@ -93,7 +103,7 @@ export default function LoginForm() {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}
+          // loading={isSubmitting}
         >
           登 陆
         </LoadingButton>
