@@ -68,6 +68,21 @@
   box-shadow: 0 2px 6px 0 rgb(0 0 0 / 8%);
 }
 
+.e-mobile-menu__left {
+  position: absolute;
+  left: 8px;
+  top: 96px;
+  z-index: 4;
+}
+
+.e-mobile-menu__top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 4;
+}
+
 :root {
   --zIndex-canvas: 1;
   --zIndex-wysiwyg: 2;
@@ -324,14 +339,14 @@
   .App-bottom-bar {
     position: absolute;
     top: 0;
-    bottom: 0;
+    //bottom: 0;
     left: 0;
     right: 0;
     --bar-padding: calc(4 * var(--space-factor));
-    padding-top: #{"max(var(--bar-padding), var(--sat,0))"};
-    padding-right: var(--sar, 0);
-    padding-bottom: var(--sab, 0);
-    padding-left: var(--sal, 0);
+    //padding-top: #{"max(var(--bar-padding), var(--sat,0))"};
+    //padding-right: var(--sar, 0);
+    //padding-bottom: var(--sab, 0);
+    //padding-left: var(--sal, 0);
     z-index: 4;
     display: flex;
     align-items: flex-end;
@@ -407,7 +422,7 @@
     align-items: flex-start;
     cursor: default;
     pointer-events: none !important;
-    z-index: 100;
+    z-index: 4;
 
     :root[dir="ltr"] & {
       left: 0.25rem;

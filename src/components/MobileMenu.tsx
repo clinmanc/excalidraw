@@ -66,11 +66,9 @@ export const MobileMenu = ({
   const renderToolbar = () => {
     return (
       <Card
-        className="e-card"
-        title="基础图形"
+        className="e-card e-mobile-menu__left"
         size="small"
-        bordered={false}
-        style={{ width: 120 }}
+        style={{ width: 58 }}
       >
         <Section heading="shapes">
           {(heading) => (
@@ -198,15 +196,15 @@ export const MobileMenu = ({
       <div
         className="App-bottom-bar"
         style={{
-          marginBottom: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,
+          marginTop: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,
           marginLeft: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,
           marginRight: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,
         }}
       >
-        <Island padding={0}>
+        <Card className="e-card e-mobile-menu__top" size="small">
           {appState.openMenu === "canvas" ? (
-            <Section className="App-mobile-menu" heading="canvasActions">
-              <div className="panelColumn">
+            // <Section className="App-mobile-menu" heading="canvasActions">
+            //   <div className="panelColumn">
                 <Stack.Col gap={4}>
                   {renderCanvasActions()}
                   {renderCustomFooter?.(true, appState)}
@@ -230,8 +228,8 @@ export const MobileMenu = ({
                     </fieldset>
                   )}
                 </Stack.Col>
-              </div>
-            </Section>
+            //   </div>
+            // </Section>
           ) : appState.openMenu === "shape" &&
             !viewModeEnabled &&
             showSelectedShapeActions(appState, elements) ? (
@@ -259,7 +257,7 @@ export const MobileMenu = ({
               </button>
             )}
           </footer>
-        </Island>
+        </Card>
       </div>
     </>
   );
