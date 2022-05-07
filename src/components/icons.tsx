@@ -266,15 +266,11 @@ export const SendToBackIcon = React.memo(({ theme }: { theme: Theme }) =>
 export const BorderColorIcon = React.memo(({ theme }: { theme: Theme }) =>
   createIcon(
     <>
-      <path d="M10.51,1.57v8.88H1.63V1.57h8.88M11.9.16H.22v11.7H11.9Z" />
-      <rect
-        x="3.14"
-        y="3.09"
-        width="5.85"
-        height="5.85"
-        rx="0.71"
+      <path
+        d="M10.51,1.57v8.88H1.63V1.57h8.88M11.9.16H.22v11.7H11.9Z"
         fill={theme}
       />
+      <rect x="3.14" y="3.09" width="5.85" height="5.85" rx="0.71" />
     </>,
     { width: 12, mirror: true },
   ),

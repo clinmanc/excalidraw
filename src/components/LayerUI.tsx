@@ -293,10 +293,6 @@ const LayerUI = ({
               ? renderViewModeCanvasActions()
               : renderCanvasActions()}
             {shouldRenderSelectedShapeActions && renderSelectedShapeActions()}
-            <ZoomActions
-              renderAction={actionManager.renderAction}
-              zoom={appState.zoom}
-            />
             {renderRightAppMenu()}
             {/*<div*/}
             {/*  className={clsx(*/}
@@ -392,6 +388,22 @@ const LayerUI = ({
         </div>
         {/*</FixedSideContainer>*/}
       </>
+    );
+  };
+
+  const renderRightBottomMenu = () => {
+    return (
+      <Card
+        className="e-menu__right-bottom e-card"
+        size="small"
+        bordered={false}
+        bodyStyle={{ padding: 0 }}
+      >
+        <ZoomActions
+          renderAction={actionManager.renderAction}
+          zoom={appState.zoom}
+        />
+      </Card>
     );
   };
 
@@ -496,6 +508,7 @@ const LayerUI = ({
     >
       {dialogs}
       {renderFixedSideContainer()}
+      {renderRightBottomMenu()}
       {appState.scrolledOutside && (
         <button
           className="scroll-back-to-content"
