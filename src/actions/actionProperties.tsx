@@ -369,17 +369,17 @@ export const actionChangeStrokeWidth = register({
         {
           value: 1,
           text: t("labels.thin"),
-          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={2} />,
+          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={1} />,
         },
         {
           value: 2,
           text: t("labels.bold"),
-          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={6} />,
+          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={2} />,
         },
         {
           value: 4,
           text: t("labels.extraBold"),
-          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={10} />,
+          icon: <StrokeWidthIcon theme={appState.theme} strokeWidth={3} />,
         },
       ]}
       value={getFormValue(

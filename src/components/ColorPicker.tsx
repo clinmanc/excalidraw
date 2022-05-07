@@ -287,6 +287,7 @@ export const ColorPicker = ({
         >
           <Tooltip title={label} placement="right" mouseEnterDelay={1}>
             <Button
+              className="e-icon-button"
               type="text"
               icon={icon}
               onClick={() => setActive(!isActive)}
