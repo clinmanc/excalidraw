@@ -284,6 +284,7 @@ const LayerUI = ({
                       zenModeEnabled,
                   })}
                 >
+                  {actionManager.renderAction("saveFileToServer")}
                   {actionManager.renderAction("undo", { size: "small" })}
                   {actionManager.renderAction("redo", { size: "small" })}
                 </div>

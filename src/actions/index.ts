@@ -39,6 +39,8 @@ export {
   actionLoadScene,
 } from "./actionExport";
 
+export { actionSaveFileToServer } from "./actionSync";
+
 export { actionCopyStyles, actionPasteStyles } from "./actionStyles";
 export {
   actionToggleCanvasMenu,

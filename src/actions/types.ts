@@ -71,6 +71,7 @@ export type ActionName =
   | "changeExportScale"
   | "saveToActiveFile"
   | "saveFileToDisk"
+  | "saveFileToServer"
   | "loadScene"
   | "duplicateSelection"
   | "deleteSelectedElements"
