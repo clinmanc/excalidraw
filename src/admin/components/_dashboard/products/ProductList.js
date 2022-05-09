@@ -20,7 +20,7 @@ export default function ProductList({ products, ...other }) {
       {products.map((product) => (
         <Grid
           component={RouterLink}
-          to="/dashboard/ed"
+          to={`/dashboard/ed/${product.id}`}
           key={product.id}
           item
           xs={12}

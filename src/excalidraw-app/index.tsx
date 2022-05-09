@@ -7,6 +7,7 @@ import { TopErrorBoundary } from "../components/TopErrorBoundary";
 import {
   APP_NAME,
   EVENT,
+  MIME_TYPES,
   TITLE_TIMEOUT,
   URL_HASH_KEYS,
   VERSION_TIMEOUT,
@@ -75,6 +76,7 @@ import {
   isBrowserStorageStateNewer,
   updateBrowserStateVersion,
 } from "./data/tabSync";
+import { loadPainting } from "../admin/api/manage";
 
 const filesStore = createStore("files-db", "files-store");
 
@@ -181,6 +183,9 @@ const initializeScene = async (opts: {
 
   const localDataState = importFromLocalStorage();
 
+  const pathname = window.location.pathname;
+  const edId = pathname.substring(pathname.lastIndexOf("/") + 1);
+
   let scene: RestoredDataState & {
     scrollToContent?: boolean;
   } = await loadScene(null, null, localDataState);
@@ -242,6 +247,34 @@ const initializeScene = async (opts: {
         scene: {
           appState: {
             errorMessage: t("alerts.invalidSceneUrl"),
+          },
+        },
+        isExternalScene,
+      };
+    }
+  } else if (edId) {
+    try {
+      const {
+        data: { content },
+      } = await new Promise((resolve, reject) => {
+        loadPainting(
+          { id: edId },
+          (res: any) => resolve(res),
+          (e: any) => reject(e),
+        );
+      });
+
+      const blob = new Blob([content], {
+        type: MIME_TYPES.excalidraw,
+      });
+
+      const data = await loadFromBlob(blob, null, null);
+      return { scene: data, isExternalScene };
+    } catch (error: any) {
+      return {
+        scene: {
+          appState: {
+            errorMessage: t("alerts.importBackendFailed"),
           },
         },
         isExternalScene,

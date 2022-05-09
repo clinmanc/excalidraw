@@ -36,7 +36,7 @@ export default function Router() {
         { path: "/dashboard", element: <Navigate to="/dashboard/products" /> },
         { path: "products", element: <Products /> },
         { path: "collect", element: <Blog /> },
-        { path: "ed", element: <ExcalidrawApp /> },
+        { path: "ed/:id", element: <ExcalidrawApp /> },
       ],
     },
     { path: "*", element: <Navigate to="/404" replace /> },

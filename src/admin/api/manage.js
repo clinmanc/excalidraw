@@ -15,6 +15,8 @@ export const userRegister = createApi(`${path}/${prefix}/user/register`, option)
 export const userLogin = createApi(`${path}/${prefix}/user/login`, option)
 //用户绘画作品
 export const userPaintings = createApi(`${path}/${prefix}/paintings`, option)
+//获取作品
+export const loadPainting = createApi(`${path}/${prefix}/paintings/info`, option)
 //同步作品
 export const updatePainting = createApi(`${path}/${prefix}/paintings/update`, option)
 // 模块管理
