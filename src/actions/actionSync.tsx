@@ -20,6 +20,7 @@ export const actionSaveFileToServer = register({
         exportBackground: appState.exportBackground,
         viewBackgroundColor: appState.viewBackgroundColor,
         exportPadding: DEFAULT_EXPORT_PADDING,
+        maxWidthOrHeight: 512,
       });
       tempCanvas.style.display = "none";
       document.body.appendChild(tempCanvas);

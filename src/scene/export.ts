@@ -22,24 +22,39 @@ export const exportToCanvas = async (
     exportBackground,
     exportPadding = DEFAULT_EXPORT_PADDING,
     viewBackgroundColor,
+    maxWidthOrHeight,
   }: {
     exportBackground: boolean;
     exportPadding?: number;
     viewBackgroundColor: string;
+    maxWidthOrHeight?: number;
   },
   createCanvas: (
     width: number,
     height: number,
-  ) => { canvas: HTMLCanvasElement; scale: number } = (width, height) => {
+    scale?: number,
+  ) => { canvas: HTMLCanvasElement; scale: number } = (
+    width,
+    height,
+    scale = appState.exportScale,
+  ) => {
     const canvas = document.createElement("canvas");
-    canvas.width = width * appState.exportScale;
-    canvas.height = height * appState.exportScale;
-    return { canvas, scale: appState.exportScale };
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    return { canvas, scale };
   },
 ) => {
   const [minX, minY, width, height] = getCanvasSize(elements, exportPadding);
 
-  const { canvas, scale = 1 } = createCanvas(width, height);
+  const { canvas, scale = 1 } = createCanvas(
+    width,
+    height,
+    maxWidthOrHeight &&
+      Math.min(
+        Math.min(width, maxWidthOrHeight) / width,
+        Math.min(height, maxWidthOrHeight) / height,
+      ),
+  );
 
   const defaultAppState = getDefaultAppState();
 
