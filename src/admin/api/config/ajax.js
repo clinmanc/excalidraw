@@ -117,7 +117,7 @@ baseConfig = { ...baseConfig, timeout: timeout, baseURL: baseURL }
 
 export const oftenFetchByPost = (api, options) => {
   // 当api参数为createApi创建的返回值
-  console.log("req start", api, options);
+  // console.log("req start", api, options);
   if (typeof api === 'function') return api
   /**
    * 可用参数组合：
@@ -222,7 +222,7 @@ export const oftenFetchByPost = (api, options) => {
         } else {
           console.dir(e)
           message.error("系统内部错误")
-          console.log()
+          // console.log()
           if (typeof failure === 'function') {
             if (e.code === 'ECONNABORTED') { // 超时的报错
               failure({
@@ -246,7 +246,7 @@ export const oftenFetchByPost = (api, options) => {
 
 // 创建发起api的启动器
 export const createApi = function (api, options) {
-  console.log("api:", api, options)
+  // console.log("api:", api, options)
   const obj = parseQueryString(window.location.href)
   let url = api
   if (obj.key) {

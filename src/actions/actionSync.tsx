@@ -15,6 +15,8 @@ import { DEFAULT_EXPORT_PADDING } from "../constants";
 export const actionSaveFileToServer = register({
   name: "saveFileToServer",
   perform: async (elements, appState, value, app) => {
+    console.log(value);
+
     try {
       const tempCanvas = await exportToCanvas(elements, appState, app.files, {
         exportBackground: appState.exportBackground,

@@ -26,7 +26,7 @@ ShopProductCard.propTypes = {
 export default function ShopProductCard({ product }) {
   const { author, thumbnail, status } = product;
 
-  console.log("ShopProductCard", product);
+  // console.log("ShopProductCard", product);
   return (
     <Card>
       <Box sx={{ pt: "100%", position: "relative" }}>

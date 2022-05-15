@@ -17,7 +17,7 @@ export default function EcommerceShop() {
     userPaintings({
       UserId: sessionStorage.getItem("username"),
     }, (res) => {
-      console.log("userPaintings", res.data)
+      // console.log("userPaintings", res.data)
       setData(res.data);
       setLoading(false);
     }, (err) => {

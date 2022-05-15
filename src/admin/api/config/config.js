@@ -2,8 +2,8 @@ export const set = 'set$'
 export const brandName = 'React' // slogan
 
 // 开发环境默认配置
-let _serverIp = 'https://www.e-draw.cn'
-let _port = ''
+let _serverIp = 'http://localhost'
+let _port = '8000'
 let _baseURL = `${_serverIp}:${_port}`
 let _mockURL = 'http://localhost:1112/'
 

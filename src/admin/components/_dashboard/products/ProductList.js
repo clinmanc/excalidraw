@@ -14,7 +14,7 @@ export default function ProductList({ products, ...other }) {
   // const toEd = (product) => {
   //   console.log(product);
   // };
-  console.log("ProductList", products);
+  // console.log("ProductList", products);
   return (
     <Grid container spacing={3} {...other}>
       {products.map((product) => (
