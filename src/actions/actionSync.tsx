@@ -38,7 +38,7 @@ export const actionSaveFileToServer = register({
         "local",
       );
       updatePainting({
-        id: "1",
+        id: appState.id,
         thumbnail,
         content: serialized,
       });

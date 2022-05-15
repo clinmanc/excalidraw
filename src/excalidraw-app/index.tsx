@@ -269,7 +269,8 @@ const initializeScene = async (opts: {
       });
 
       const data = await loadFromBlob(blob, null, null);
-      return { scene: data, isExternalScene };
+      data.appState.id = edId;
+      return { scene: data, isExternalScene: false };
     } catch (error: any) {
       return {
         scene: {
