@@ -193,44 +193,42 @@ export const MobileMenu = ({
   return (
     <>
       {!viewModeEnabled && renderToolbar()}
-      <div
-        className="App-bottom-bar"
-        style={{
-          marginTop: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,
-          marginLeft: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,
-          marginRight: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,
-        }}
-      >
-        <Card className="e-card e-mobile-menu__top" size="small">
+      {/*<div*/}
+      {/*  className="App-bottom-bar"*/}
+      {/*  style={{*/}
+      {/*    marginTop: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,*/}
+      {/*    marginLeft: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,*/}
+      {/*    marginRight: SCROLLBAR_WIDTH + SCROLLBAR_MARGIN * 2,*/}
+      {/*  }}*/}
+      {/*>*/}
+        <Card className="e-card e-mobile-menu__top" size="small" bodyStyle={{padding:0}}>
           {appState.openMenu === "canvas" ? (
             // <Section className="App-mobile-menu" heading="canvasActions">
             //   <div className="panelColumn">
-                <Stack.Col gap={4}>
-                  {renderCanvasActions()}
-                  {renderCustomFooter?.(true, appState)}
-                  {appState.collaborators.size > 0 && (
-                    <fieldset>
-                      <legend>{t("labels.collaborators")}</legend>
-                      <UserList mobile>
-                        {Array.from(appState.collaborators)
-                          // Collaborator is either not initialized or is actually the current user.
-                          .filter(
-                            ([_, client]) => Object.keys(client).length !== 0,
-                          )
-                          .map(([clientId, client]) => (
-                            <React.Fragment key={clientId}>
-                              {actionManager.renderAction("goToCollaborator", {
-                                id: clientId,
-                              })}
-                            </React.Fragment>
-                          ))}
-                      </UserList>
-                    </fieldset>
-                  )}
-                </Stack.Col>
-            //   </div>
-            // </Section>
-          ) : appState.openMenu === "shape" &&
+            <Stack.Col gap={4}>
+              {renderCanvasActions()}
+              {renderCustomFooter?.(true, appState)}
+              {appState.collaborators.size > 0 && (
+                <fieldset>
+                  <legend>{t("labels.collaborators")}</legend>
+                  <UserList mobile>
+                    {Array.from(appState.collaborators)
+                      // Collaborator is either not initialized or is actually the current user.
+                      .filter(([_, client]) => Object.keys(client).length !== 0)
+                      .map(([clientId, client]) => (
+                        <React.Fragment key={clientId}>
+                          {actionManager.renderAction("goToCollaborator", {
+                            id: clientId,
+                          })}
+                        </React.Fragment>
+                      ))}
+                  </UserList>
+                </fieldset>
+              )}
+            </Stack.Col>
+          ) : //   </div>
+          // </Section>
+          appState.openMenu === "shape" &&
             !viewModeEnabled &&
             showSelectedShapeActions(appState, elements) ? (
             <Section className="App-mobile-menu" heading="selectedShapeActions">
@@ -242,23 +240,23 @@ export const MobileMenu = ({
               />
             </Section>
           ) : null}
-          <footer className="App-toolbar">
-            {renderAppToolbar()}
-            {appState.scrolledOutside && !appState.openMenu && (
-              <button
-                className="scroll-back-to-content"
-                onClick={() => {
-                  setAppState({
-                    ...calculateScrollCenter(elements, appState, canvas),
-                  });
-                }}
-              >
-                {t("buttons.scrollBackToContent")}
-              </button>
-            )}
-          </footer>
+          {/*<footer className="App-toolbar">*/}
+          {renderAppToolbar()}
+          {appState.scrolledOutside && !appState.openMenu && (
+            <button
+              className="scroll-back-to-content"
+              onClick={() => {
+                setAppState({
+                  ...calculateScrollCenter(elements, appState, canvas),
+                });
+              }}
+            >
+              {t("buttons.scrollBackToContent")}
+            </button>
+          )}
+          {/*</footer>*/}
         </Card>
-      </div>
+      {/*</div>*/}
     </>
   );
 };

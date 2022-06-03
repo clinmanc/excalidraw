@@ -10,26 +10,30 @@ import { serializeAsJSON } from "../data/json";
 import { updatePainting } from "../admin/api/manage";
 import { canvasToBlob, getDataURL } from "../data/blob";
 import { exportToCanvas } from "../scene/export";
-import { DEFAULT_EXPORT_PADDING } from "../constants";
+import { DEFAULT_EXPORT_PADDING, MIME_TYPES } from "../constants";
 
 export const actionSaveFileToServer = register({
   name: "saveFileToServer",
   perform: async (elements, appState, value, app) => {
-    console.log(value);
+    if (!appState.id) {
+      console.error("id must not be empty");
+      return { commitToHistory: false };
+    }
 
     try {
-      const tempCanvas = await exportToCanvas(elements, appState, app.files, {
+      const tmpCanvas = await exportToCanvas(elements, appState, app.files, {
         exportBackground: appState.exportBackground,
         viewBackgroundColor: appState.viewBackgroundColor,
         exportPadding: DEFAULT_EXPORT_PADDING,
         maxWidthOrHeight: 512,
       });
-      tempCanvas.style.display = "none";
-      document.body.appendChild(tempCanvas);
-      let blob = await canvasToBlob(tempCanvas);
-      tempCanvas.remove();
-
-      const thumbnail = await getDataURL(blob);
+      tmpCanvas.style.display = "none";
+      document.body.appendChild(tmpCanvas);
+      const tmpBlob = await canvasToBlob(tmpCanvas);
+      const thumbnail = new File([tmpBlob], "thumbnail.png", {
+        type: tmpBlob.type,
+      });
+      tmpCanvas.remove();
 
       const serialized = serializeAsJSON(
         elements,
@@ -37,11 +41,16 @@ export const actionSaveFileToServer = register({
         app.files,
         "local",
       );
-      updatePainting({
-        id: appState.id,
-        thumbnail,
-        content: serialized,
+      const content = new File([serialized], "content.ezd", {
+        type: MIME_TYPES.excalidraw,
       });
+
+      const form = new FormData();
+      form.append("id", appState.id);
+      form.append("thumbnail", thumbnail);
+      form.append("content", content);
+
+      updatePainting(form);
       return { commitToHistory: false, appState: { ...appState } };
     } catch (error: any) {
       if (error?.name !== "AbortError") {

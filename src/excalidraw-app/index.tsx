@@ -264,9 +264,8 @@ const initializeScene = async (opts: {
         );
       });
 
-      const blob = new Blob([content], {
-        type: MIME_TYPES.excalidraw,
-      });
+      const res = await fetch(content);
+      const blob = await res.blob();
 
       const data = await loadFromBlob(blob, null, null);
       data.appState.id = edId;
