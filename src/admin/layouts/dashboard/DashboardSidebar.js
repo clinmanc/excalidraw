@@ -113,7 +113,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
               咨询客服?
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              微信二维码
+              <Box
+                component="img"
+                src="/static/kf_qrcode.png"
+                sx={{ top: 50 }}
+              />
             </Typography>
           </Box>
 
