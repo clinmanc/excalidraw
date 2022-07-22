@@ -5,14 +5,18 @@ import { useIsMobile } from "./App";
 import { ToolButton } from "./ToolButton";
 
 // import ConfirmDialog from "./ConfirmDialog";
-import { Modal } from "antd";
+import { Modal, Grid } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+
+const { useBreakpoint } = Grid;
 
 const ClearCanvas = ({ onConfirm }: { onConfirm: () => void }) => {
   const [showDialog, setShowDialog] = useState(false);
   const toggleDialog = () => {
     setShowDialog(!showDialog);
   };
+
+  const screens = useBreakpoint();
 
   return (
     <>
@@ -24,6 +28,11 @@ const ClearCanvas = ({ onConfirm }: { onConfirm: () => void }) => {
         showAriaLabel={useIsMobile()}
         onClick={toggleDialog}
         data-testid="clear-canvas-button"
+        children={
+          (screens.xs || screens.sm) && !screens.md
+            ? t("buttons.clearReset")
+            : ""
+        }
       />
 
       {

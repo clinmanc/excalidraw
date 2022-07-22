@@ -19,8 +19,10 @@ import OpenColor from "open-color";
 import { CheckboxItem } from "./CheckboxItem";
 import { DEFAULT_EXPORT_PADDING } from "../constants";
 import { nativeFileSystemSupported } from "../data/filesystem";
-
+import { Grid } from "antd";
 import { FileImageOutlined } from "@ant-design/icons";
+
+const { useBreakpoint } = Grid;
 
 const supportsContextFilters =
   "filter" in document.createElement("canvas").getContext("2d")!;
@@ -242,6 +244,8 @@ export const ImageExportDialog = ({
     setModalIsShown(false);
   }, []);
 
+  const screens = useBreakpoint();
+
   return (
     <>
       <ToolButton
@@ -254,6 +258,11 @@ export const ImageExportDialog = ({
         aria-label={t("buttons.exportImage")}
         showAriaLabel={useIsMobile()}
         title={t("buttons.exportImage")}
+        children={
+          (screens.xs || screens.sm) && !screens.md
+            ? t("buttons.exportImage")
+            : ""
+        }
       />
       {modalIsShown && (
         <Dialog onCloseRequest={handleClose} title={t("buttons.exportImage")}>
