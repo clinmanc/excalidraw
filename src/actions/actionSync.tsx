@@ -4,13 +4,11 @@ import { t } from "../i18n";
 import { useIsMobile } from "../components/App";
 import { KEYS } from "../keys";
 import { register } from "./register";
-
-import { SaveOutlined } from "@ant-design/icons";
+import { MIME_TYPES } from "../constants";
+import { exportToBlob } from "../packages/utils";
 import { serializeAsJSON } from "../data/json";
+import { SaveOutlined } from "@ant-design/icons";
 import { updatePainting } from "../admin/api/manage";
-import { canvasToBlob, getDataURL } from "../data/blob";
-import { exportToCanvas } from "../scene/export";
-import { DEFAULT_EXPORT_PADDING, MIME_TYPES } from "../constants";
 
 export const actionSaveFileToServer = register({
   name: "saveFileToServer",
@@ -21,36 +19,34 @@ export const actionSaveFileToServer = register({
     }
 
     try {
-      const tmpCanvas = await exportToCanvas(elements, appState, app.files, {
-        exportBackground: appState.exportBackground,
-        viewBackgroundColor: appState.viewBackgroundColor,
-        exportPadding: DEFAULT_EXPORT_PADDING,
-        maxWidthOrHeight: 512,
+      const tmpBlob = await exportToBlob({
+        elements: elements,
+        files: app.files,
+        mimeType: MIME_TYPES.png,
+        quality: 1,
       });
-      tmpCanvas.style.display = "none";
-      document.body.appendChild(tmpCanvas);
-      const tmpBlob = await canvasToBlob(tmpCanvas);
-      const thumbnail = new File([tmpBlob], "thumbnail.png", {
-        type: tmpBlob.type,
-      });
-      tmpCanvas.remove();
+      if (tmpBlob) {
+        const thumbnail = new File([tmpBlob], "thumbnail.png", {
+          type: tmpBlob.type,
+        });
 
-      const serialized = serializeAsJSON(
-        elements,
-        appState,
-        app.files,
-        "local",
-      );
-      const content = new File([serialized], "content.ezd", {
-        type: MIME_TYPES.excalidraw,
-      });
+        const serialized = serializeAsJSON(
+          elements,
+          appState,
+          app.files,
+          "local",
+        );
+        const content = new File([serialized], "content.ezd", {
+          type: MIME_TYPES.excalidraw,
+        });
 
-      const form = new FormData();
-      form.append("id", appState.id);
-      form.append("thumbnail", thumbnail);
-      form.append("content", content);
+        const form = new FormData();
+        form.append("id", appState.id);
+        form.append("thumbnail", thumbnail);
+        form.append("content", content);
 
-      updatePainting(form);
+        updatePainting(form);
+      }
       return { commitToHistory: false, appState: { ...appState } };
     } catch (error: any) {
       if (error?.name !== "AbortError") {
