@@ -3,14 +3,23 @@ import { Icon } from "@iconify/react";
 import menu2Fill from "@iconify/icons-eva/menu-2-fill";
 // material
 import { alpha, styled } from "@mui/material/styles";
-import {AppBar, Box, Button, IconButton, Stack, Toolbar, Typography} from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 // components
 import { MHidden } from "../../components/@material-extend";
 //
 import AccountPopover from "./AccountPopover";
 import NotificationsPopover from "./NotificationsPopover";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import plusFill from "@iconify/icons-eva/plus-fill";
+import { addPainting } from "../../api/manage";
 
 // ----------------------------------------------------------------------
 
@@ -47,6 +56,13 @@ export default function DashboardNavbar({ onOpenSidebar }) {
   if (window.location.href.includes("ed")) {
     edPage = true;
   }
+
+  const navigate = useNavigate();
+  const onAddPaintingClick = () => {
+    addPainting({}, (res) =>
+      navigate(`/dashboard/ed/${res.data.id}`, { replace: true }),
+    );
+  };
   return (
     <RootStyle>
       {/*头部导航*/}
@@ -59,9 +75,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
             <Icon icon={menu2Fill} />
           </IconButton>
 
-          <Typography  variant="h6">
-            作品1
-          </Typography>
+          <Typography variant="h6">作品1</Typography>
         </MHidden>
 
         {/*<Searchbar />*/}
@@ -78,6 +92,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
             component={RouterLink}
             to="#"
             startIcon={<Icon icon={plusFill} />}
+            onClick={onAddPaintingClick}
           >
             新增作品
           </Button>

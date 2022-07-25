@@ -306,12 +306,15 @@ const initializeScene = async (opts: {
         );
       });
 
-      const res = await fetch(content);
-      const blob = await res.blob();
-
-      const data = await loadFromBlob(blob, null, null);
-      data.appState.id = edId;
-      return { scene: data, isExternalScene: false };
+      if (content) {
+        const res = await fetch(content);
+        const blob = await res.blob();
+        const data = await loadFromBlob(blob, null, null);
+        data.appState.id = edId;
+        return { scene: data, isExternalScene: false };
+      } else {
+        return { scene: { appState: { id: edId } }, isExternalScene: false };
+      }
     } catch (error: any) {
       return {
         scene: {
