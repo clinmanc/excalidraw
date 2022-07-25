@@ -226,7 +226,8 @@ export const actionChangeStrokeColor = register({
       type="elementStroke"
       icon={
         <BorderColorIcon
-          theme={
+          theme={appState.theme}
+          color={
             getFormValue(
               elements,
               appState,
@@ -275,7 +276,8 @@ export const actionChangeBackgroundColor = register({
       type="elementBackground"
       icon={
         <BackgroundColorIcon
-          theme={
+          theme={appState.theme}
+          color={
             getFormValue(
               elements,
               appState,

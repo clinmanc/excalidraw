@@ -165,7 +165,7 @@ const saveToLocalStorageDebounced = debounce(
   SAVE_TO_LOCAL_STORAGE_TIMEOUT,
 );
 
-let lastSceneVersion: number;
+let lastServerSceneVersion: number;
 const saveToServerDebounced = debounce(
   async (
     elements: readonly ExcalidrawElement[],
@@ -174,8 +174,8 @@ const saveToServerDebounced = debounce(
     onFilesSaved: () => void,
   ) => {
     const version = getSceneVersion(elements);
-    if (lastSceneVersion !== version) {
-      lastSceneVersion = version;
+    if (lastServerSceneVersion !== version) {
+      lastServerSceneVersion = version;
       await saveToServer(elements, appState, files);
     }
   },
