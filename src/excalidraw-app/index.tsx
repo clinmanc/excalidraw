@@ -23,6 +23,7 @@ import { useCallbackRefState } from "../hooks/useCallbackRefState";
 import { Language, t } from "../i18n";
 import Excalidraw, {
   defaultLang,
+  getSceneVersion,
   languages,
 } from "../packages/excalidraw/index";
 import {
@@ -43,6 +44,7 @@ import {
 import {
   FIREBASE_STORAGE_PREFIXES,
   SAVE_TO_LOCAL_STORAGE_TIMEOUT,
+  SAVE_TO_SERVER_TIMEOUT,
   STORAGE_KEYS,
   SYNC_BROWSER_TABS_TIMEOUT,
 } from "./app_constants";
@@ -77,6 +79,7 @@ import {
   updateBrowserStateVersion,
 } from "./data/tabSync";
 import { loadPainting } from "../admin/api/manage";
+import { saveToServer } from "./server";
 
 const filesStore = createStore("files-db", "files-store");
 
@@ -144,7 +147,7 @@ languageDetector.init({
   checkWhitelist: false,
 });
 
-const saveDebounced = debounce(
+const saveToLocalStorageDebounced = debounce(
   async (
     elements: readonly ExcalidrawElement[],
     appState: AppState,
@@ -161,6 +164,45 @@ const saveDebounced = debounce(
   },
   SAVE_TO_LOCAL_STORAGE_TIMEOUT,
 );
+
+let lastSceneVersion: number;
+const saveToServerDebounced = debounce(
+  async (
+    elements: readonly ExcalidrawElement[],
+    appState: AppState,
+    files: BinaryFiles,
+    onFilesSaved: () => void,
+  ) => {
+    const version = getSceneVersion(elements);
+    if (lastSceneVersion !== version) {
+      lastSceneVersion = version;
+      await saveToServer(elements, appState, files);
+    }
+  },
+  SAVE_TO_SERVER_TIMEOUT,
+);
+
+const saveDebounced = (() => {
+  const ret = (
+    elements: readonly ExcalidrawElement[],
+    appState: AppState,
+    files: BinaryFiles,
+    onFilesSaved: () => void,
+  ) => {
+    saveToLocalStorageDebounced(elements, appState, files, onFilesSaved);
+    saveToServerDebounced(elements, appState, files, onFilesSaved);
+  };
+  ret.flush = () => {
+    saveToLocalStorageDebounced.flush();
+    saveToServerDebounced.flush();
+  };
+  ret.cancel = () => {
+    saveToLocalStorageDebounced.cancel();
+    saveToServerDebounced.cancel();
+  };
+
+  return ret;
+})();
 
 const onBlur = () => {
   saveDebounced.flush();
