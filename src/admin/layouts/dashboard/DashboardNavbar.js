@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import menu2Fill from "@iconify/icons-eva/menu-2-fill";
 // material
 import { alpha, styled } from "@mui/material/styles";
-import { AppBar, Box, Button, IconButton, Stack, Toolbar } from "@mui/material";
+import {AppBar, Box, Button, IconButton, Stack, Toolbar, Typography} from "@mui/material";
 // components
 import { MHidden } from "../../components/@material-extend";
 //
@@ -58,6 +58,10 @@ export default function DashboardNavbar({ onOpenSidebar }) {
           >
             <Icon icon={menu2Fill} />
           </IconButton>
+
+          <Typography  variant="h6">
+            作品1
+          </Typography>
         </MHidden>
 
         {/*<Searchbar />*/}
