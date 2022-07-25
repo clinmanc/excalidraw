@@ -17,7 +17,7 @@ import { MHidden } from "../../components/@material-extend";
 //
 import AccountPopover from "./AccountPopover";
 import NotificationsPopover from "./NotificationsPopover";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import { addPainting } from "../../api/manage";
 
@@ -56,13 +56,21 @@ export default function DashboardNavbar({ onOpenSidebar }) {
   if (window.location.href.includes("ed")) {
     edPage = true;
   }
-
+  let location = useLocation();
   const navigate = useNavigate();
   const onAddPaintingClick = () => {
-    addPainting({}, (res) =>
-      navigate(`/dashboard/ed/${res.data.id}`, { replace: true }),
+    addPainting({
+        UserId: sessionStorage.getItem("username"),
+      }, (res) =>
+        navigate(`/dashboard/ed/${res.data.id}`, {
+          replace: true,
+          state: {
+            name: res.data.name != null ?res.data.name:"",
+          }
+        }),
     );
   };
+
   return (
     <RootStyle>
       {/*头部导航*/}
@@ -75,7 +83,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
             <Icon icon={menu2Fill} />
           </IconButton>
 
-          <Typography variant="h6">作品1</Typography>
+          <Typography variant="h6">{ location.state != null ? location.state.name : ""}</Typography>
         </MHidden>
 
         {/*<Searchbar />*/}

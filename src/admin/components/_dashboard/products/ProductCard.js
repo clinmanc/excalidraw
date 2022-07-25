@@ -24,7 +24,7 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { author, thumbnail, status } = product;
+  const { author, thumbnail, status, name, create } = product;
 
   // console.log("ShopProductCard", product);
   return (
@@ -54,9 +54,9 @@ export default function ShopProductCard({ product }) {
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link to="#" color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
-            {"作品1"}
+            {name}
           </Typography>
-          {"2022-2-2"}
+            {create}
         </Link>
         {/*<Stack direction="row" alignItems="center" justifyContent="space-between">*/}
         {/*  <ColorPreview colors={colors} />*/}
