@@ -164,7 +164,7 @@ export const Hyperlink = ({
           </Select>
           {schemeVal === "e-draw" ? (
             <Select
-              value={eDrawId}
+              value={edId}
               onChange={(value) => setEdId(value)}
               autoFocus
               onKeyDown={(event) => {
