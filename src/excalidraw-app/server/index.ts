@@ -3,6 +3,7 @@ import { MIME_TYPES } from "../../constants";
 import { updatePainting } from "../../admin/api/manage";
 import { ExcalidrawElement } from "../../element/types";
 import { AppState, BinaryFiles } from "../../types";
+import { getDataURL } from "../../data/blob";
 
 export const saveToServer = async (
   elements: readonly ExcalidrawElement[],
@@ -36,5 +37,7 @@ export const saveToServer = async (
     form.append("content", content);
 
     updatePainting(form);
+
+    appState.thumbnail = await getDataURL(thumbnail);
   }
 };

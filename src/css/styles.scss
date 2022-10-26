@@ -2,6 +2,24 @@
 @import "./theme";
 @import "~antd/dist/antd.css";
 
+.e-current-item {
+  background-color: #e9ecef;
+}
+
+.e-clickable {
+  cursor: pointer;
+}
+
+.e-clickable:hover {
+  background-color: #ced4da;
+  opacity: 0.75;
+}
+
+.e-clickable:active {
+  background-color: #adb5bd;
+  opacity: 0.5;
+}
+
 .e-menu__top {
   position: absolute;
   left: 8px;
@@ -13,6 +31,12 @@
   position: absolute;
   left: 8px;
   top: 56px;
+}
+
+.e-menu__right {
+  position: absolute;
+  right: 8px;
+  top: 92px;
 }
 
 .e-menu__right-bottom {

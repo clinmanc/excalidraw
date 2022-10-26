@@ -36,7 +36,7 @@ import "./LayerUI.scss";
 import "./Toolbar.scss";
 import { PenModeButton } from "./PenModeButton";
 
-import { Button, Card, Tooltip } from "antd";
+import { Button, Card, Image, List, Tooltip } from "antd";
 import { HighlightOutlined } from "@ant-design/icons";
 
 interface LayerUIProps {
@@ -386,6 +386,38 @@ const LayerUI = ({
               )}
             </Section>
           )}
+        </div>
+
+        <div className="e-menu__right">
+          <Card className="e-card" size="small" bordered={false}>
+            <List
+              style={{ width: 116, minHeight: 116 }}
+              size="small"
+              itemLayout="horizontal"
+              locale={{ emptyText: "暂无数据" }}
+              dataSource={appState.workbook}
+              renderItem={(work) => (
+                <a href={`/dashboard/ed/${work.id}`}>
+                  <List.Item
+                    className={`e-clickable ${
+                      String(work.id) === appState.id ? "e-current-item" : ""
+                    }`}
+                    style={{ padding: 8 }}
+                  >
+                    <Image
+                      style={{ width: 100, height: 100, objectFit: "cover" }}
+                      preview={false}
+                      src={
+                        String(work.id) === appState.id
+                          ? appState.thumbnail
+                          : work.thumbnail
+                      }
+                    />
+                  </List.Item>
+                </a>
+              )}
+            />
+          </Card>
         </div>
         {/*</FixedSideContainer>*/}
       </>

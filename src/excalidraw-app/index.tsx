@@ -78,7 +78,7 @@ import {
   isBrowserStorageStateNewer,
   updateBrowserStateVersion,
 } from "./data/tabSync";
-import { loadPainting } from "../admin/api/manage";
+import { loadPainting, userPaintings } from "../admin/api/manage";
 import { saveToServer } from "./server";
 
 const filesStore = createStore("files-db", "files-store");
@@ -297,10 +297,17 @@ const initializeScene = async (opts: {
   } else if (edId) {
     try {
       const {
-        data: { content },
+        data: { content, thumbnail },
       } = await new Promise((resolve, reject) => {
         loadPainting(
           { id: edId },
+          (res: any) => resolve(res),
+          (e: any) => reject(e),
+        );
+      });
+      const { data: workbook } = await new Promise((resolve, reject) => {
+        userPaintings(
+          { UserId: sessionStorage.getItem("username") },
           (res: any) => resolve(res),
           (e: any) => reject(e),
         );
@@ -311,6 +318,8 @@ const initializeScene = async (opts: {
         const blob = await res.blob();
         const data = await loadFromBlob(blob, null, null);
         data.appState.id = edId;
+        data.appState.thumbnail = thumbnail;
+        data.appState.workbook = workbook;
         return { scene: data, isExternalScene: false };
       } else {
         return { scene: { appState: { id: edId } }, isExternalScene: false };

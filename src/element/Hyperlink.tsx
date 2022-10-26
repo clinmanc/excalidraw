@@ -33,6 +33,7 @@ import { getElementAbsoluteCoords } from "./";
 import "./Hyperlink.scss";
 
 import { LinkOutlined } from "@ant-design/icons";
+import { Select } from "antd";
 
 const CONTAINER_WIDTH = 320;
 const SPACE_BOTTOM = 85;
@@ -60,20 +61,36 @@ export const Hyperlink = ({
 }) => {
   const linkVal = element.link || "";
 
+  const [schemeVal, setSchemeVal] = useState(
+    linkVal.startsWith("/dashboard/ed/") ? "e-draw" : "external",
+  );
+  const [edId, setEdId] = useState(
+    linkVal.startsWith("/dashboard/ed/") ? Number(linkVal.substring(14)) : null,
+  );
   const [inputVal, setInputVal] = useState(linkVal);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef(inputVal);
+  useEffect(() => {
+    inputRef.current = inputVal;
+  }, [inputVal]);
+  useEffect(() => {
+    if (schemeVal === "e-draw") {
+      setInputVal("/dashboard/ed/" + edId);
+    } else {
+      setInputVal("");
+    }
+  }, [schemeVal, edId, setInputVal]);
+
   const isEditing = appState.showHyperlinkPopup === "editor" || !linkVal;
 
   const handleSubmit = useCallback(() => {
-    if (!inputRef.current) {
+    if (!isEditing) {
       return;
     }
-
-    const link = normalizeLink(inputRef.current.value);
+    const link = normalizeLink(inputRef.current);
 
     mutateElement(element, { link });
     setAppState({ showHyperlinkPopup: "info" });
-  }, [element, setAppState]);
+  }, [element, setAppState, inputRef, isEditing]);
 
   useLayoutEffect(() => {
     return () => {
@@ -112,7 +129,7 @@ export const Hyperlink = ({
   const handleRemove = useCallback(() => {
     mutateElement(element, { link: null });
     if (isEditing) {
-      inputRef.current!.value = "";
+      setInputVal("");
     }
     setAppState({ showHyperlinkPopup: false });
   }, [setAppState, element, isEditing]);
@@ -140,24 +157,54 @@ export const Hyperlink = ({
       }}
     >
       {isEditing ? (
-        <input
-          className={clsx("excalidraw-hyperlinkContainer-input")}
-          placeholder="Type or paste your link here"
-          ref={inputRef}
-          value={inputVal}
-          onChange={(event) => setInputVal(event.target.value)}
-          autoFocus
-          onKeyDown={(event) => {
-            event.stopPropagation();
-            // prevent cmd/ctrl+k shortcut when editing link
-            if (event[KEYS.CTRL_OR_CMD] && event.key === KEYS.K) {
-              event.preventDefault();
-            }
-            if (event.key === KEYS.ENTER || event.key === KEYS.ESCAPE) {
-              handleSubmit();
-            }
-          }}
-        />
+        <>
+          <Select value={schemeVal} onChange={(value) => setSchemeVal(value)}>
+            <Select.Option value="e-draw"> 页面链接 </Select.Option>
+            <Select.Option value="external"> 外部链接 </Select.Option>
+          </Select>
+          {schemeVal === "e-draw" ? (
+            <Select
+              value={eDrawId}
+              onChange={(value) => setEdId(value)}
+              autoFocus
+              onKeyDown={(event) => {
+                event.stopPropagation();
+                // prevent cmd/ctrl+k shortcut when editing link
+                if (event[KEYS.CTRL_OR_CMD] && event.key === KEYS.K) {
+                  event.preventDefault();
+                }
+                if (event.key === KEYS.ENTER || event.key === KEYS.ESCAPE) {
+                  handleSubmit();
+                }
+              }}
+              style={{ width: "100%" }}
+            >
+              {appState.workbook.map((work) => (
+                <Select.Option key={work.id} value={work.id} title={work.name}>
+                  {work.name}
+                </Select.Option>
+              ))}
+            </Select>
+          ) : (
+            <input
+              className={clsx("excalidraw-hyperlinkContainer-input")}
+              placeholder="Type or paste your link here"
+              value={inputVal}
+              onChange={(event) => setInputVal(event.target.value)}
+              autoFocus
+              onKeyDown={(event) => {
+                event.stopPropagation();
+                // prevent cmd/ctrl+k shortcut when editing link
+                if (event[KEYS.CTRL_OR_CMD] && event.key === KEYS.K) {
+                  event.preventDefault();
+                }
+                if (event.key === KEYS.ENTER || event.key === KEYS.ESCAPE) {
+                  handleSubmit();
+                }
+              }}
+            />
+          )}
+        </>
       ) : (
         <a
           href={element.link || ""}

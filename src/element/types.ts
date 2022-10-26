@@ -166,3 +166,10 @@ export type ExcalidrawFreeDrawElement = _ExcalidrawElementBase &
   }>;
 
 export type FileId = string & { _brand: "FileId" };
+
+export type EDrawWork = {
+  id: string;
+  name: string;
+  thumbnail: string;
+  content: string;
+};
